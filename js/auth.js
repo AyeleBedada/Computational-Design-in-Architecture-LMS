@@ -1,6 +1,6 @@
 // --- AUTH.JS ---
 
-/*
+
 
 async function loginUser(email, password) {
   // Load users.json
@@ -68,7 +68,7 @@ async function updatePassword(email, newPass) {
   alert("Password updated successfully!");
 }
 
-*/
+
 
 // for checking ///////////////////////////////////////////////////
 
