@@ -70,14 +70,25 @@
   <script>
     // Login flow with EmailJS verification then create session
     let pendingUser = null;
-
+/*
 const user = document.getElementById('username').value;
 const pass = document.getElementById('password').value;
 
 auth.signInWithEmailAndPassword(user, pass)
     .then(() => window.location.href = 'index.html')
     .catch(err => alert(err.message));
+*/
 
+const loginBtn = document.getElementById('loginBtn');
+loginBtn.addEventListener('click', () => {
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+  if(user === 'student' && pass === '1234'){
+    window.location.href = 'index.html';
+  } else {
+    alert('Invalid login');
+  }
+});
 
 /*
     document.getElementById('loginBtn').addEventListener('click', async () => {
