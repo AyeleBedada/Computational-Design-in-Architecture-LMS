@@ -17,7 +17,7 @@ async function loginUser(email, password) {
   const code = Math.floor(100000 + Math.random() * 900000); // 6-digit
   localStorage.setItem("verificationCode", code);
 
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+  emailjs.send("service_ozngnh9", "template_mcxm9mc", {
     to_email: email,
     code: code
   }).then(() => {
@@ -69,34 +69,4 @@ async function updatePassword(email, newPass) {
 }
 
 
-
-// for checking ///////////////////////////////////////////////////
-
-async function login(event) {
-  event.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  console.log("Trying login with:", username, password);
-
-  try {
-    const res = await fetch("./data/users.json");
-    const users = await res.json();
-    console.log("Loaded users:", users);
-
-    const user = users.find(
-      u => u.username === username && u.password === password
-    );
-
-    if (user) {
-      console.log("Login success:", user);
-      // redirect or show dashboard
-    } else {
-      console.log("Login failed — wrong username or password");
-      alert("Invalid username or password");
-    }
-  } catch (err) {
-    console.error("Error in login:", err);
-  }
-}
 

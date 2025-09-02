@@ -1,5 +1,6 @@
 // Firebase config...
 //Replace YOUR_API_KEY etc. with your Firebase config
+
 const firebaseConfig = {
   apiKey: "AIzaSyA-czU60LVydTz9XvhswZgkmJX9fwR_N_U",
   authDomain: "computational-design-454bb.firebaseapp.com",
