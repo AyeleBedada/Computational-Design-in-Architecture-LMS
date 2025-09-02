@@ -1,7 +1,7 @@
 // --- AUTH.JS ---
 async function loginUser(email, password) {
   // Load users.json
-  const res = await fetch("data/users.json");
+  const res = await fetch("./data/users.json");
   const users = await res.json();
   const user = users.find(u => u.email === email && u.password === password);
 
