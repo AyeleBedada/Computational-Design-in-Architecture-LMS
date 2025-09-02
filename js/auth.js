@@ -1,4 +1,7 @@
 // --- AUTH.JS ---
+
+/*
+
 async function loginUser(email, password) {
   // Load users.json
   const res = await fetch("./data/users.json");
@@ -59,14 +62,13 @@ function changePassword(email) {
     }
   });
 }
-
 async function updatePassword(email, newPass) {
   // Update in Firestore
   await db.collection("users").doc(email).set({ password: newPass }, { merge: true });
   alert("Password updated successfully!");
 }
 
-
+*/
 
 // for checking ///////////////////////////////////////////////////
 
