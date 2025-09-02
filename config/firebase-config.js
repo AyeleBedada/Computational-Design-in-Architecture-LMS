@@ -14,8 +14,16 @@
     appId: "1:708017149553:web:f37a930bb369eb01a02dd0"
   };
 
+
   // Initialize once, expose on window for other modules
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/*
   const app = initializeApp(firebaseConfig);
   window.$db = getFirestore(app);
   window.$auth = getAuth(app);
+*/
+
 </script>

@@ -71,9 +71,19 @@
     // Login flow with EmailJS verification then create session
     let pendingUser = null;
 
+const user = document.getElementById('username').value;
+const pass = document.getElementById('password').value;
+
+auth.signInWithEmailAndPassword(user, pass)
+    .then(() => window.location.href = 'index.html')
+    .catch(err => alert(err.message));
+
+
+/*
     document.getElementById('loginBtn').addEventListener('click', async () => {
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
+*/
       try {
         pendingUser = await login(username, password);
         document.getElementById('codeGroup').style.display = 'block';
