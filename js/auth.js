@@ -51,7 +51,7 @@ function logoutUser() {
 
 function changePassword(email) {
   const code = Math.floor(100000 + Math.random() * 900000);
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+  emailjs.send("service_ozngnh9", "template_mcxm9mc", {
     to_email: email,
     code: code
   }).then(() => {
