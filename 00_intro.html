@@ -1,0 +1,153 @@
+<!-- /00_intro.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Course Introduction & Announcements</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Firebase / EmailJS -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="config/firebase-config.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/progress.js" defer></script>
+  <script src="js/forum.js" defer></script>
+  <script src="js/admin.js" defer></script>
+
+<script>
+  function requireSession() {
+    const session = JSON.parse(localStorage.getItem('sessionUser')||'null');
+    if (!session) location.href = 'index.html';
+    return session;
+  }
+  function renderChrome(activeHref) {
+    const s = requireSession();
+    const role = s.role;
+
+    // Top bar
+    document.getElementById('topbar').innerHTML = `
+      <div class="topbar-inner">
+        <div class="logo">CDA</div>
+        <nav class="topnav">
+          <a href="00_navigation_tutorial.html">Tutorial</a>
+          <a href="00_intro.html">Intro</a>
+          <a href="Unit-0-[Course Introduction]/0_course_syllabus.html">Syllabus</a>
+          <a href="complete.html">Completion</a>
+        </nav>
+        <div class="top-actions">
+          <span class="userchip">${s.username} (${s.role})</span>
+          ${role==='admin' ? '<a class="btn tiny" href="admin.html">Admin</a>' : ''}
+          <button class="btn tiny outline" onclick="logout()">Logout</button>
+        </div>
+      </div>`;
+
+    // Sidebar
+    const links = [
+      {href:'00_navigation_tutorial.html', label:'How to Navigate'},
+      {href:'00_intro.html', label:'Course Introduction'},
+      {href:'00_concern.html', label:'Concerns & Suggestions'},
+      {href:'Unit-0-[Course Introduction]/0_unit_introduction.html', label:'Unit 0: Intro'},
+      {href:'Unit-0-[Course Introduction]/0_course_syllabus.html', label:'Syllabus'},
+      {href:'Unit-0-[Course Introduction]/0_rubrics.html', label:'Rubrics'},
+      {href:'Unit-0-[Course Introduction]/0_pre_assessment.html', label:'Pre-Assessment'},
+      {href:'Unit-0-[Course Introduction]/0_quiz_0.html', label:'Unit 0 Quiz'},
+      {href:'Unit-1-[Computational Design in Architecture]/1.1_[Introduction to Computational Design]/1.1.1_introduction_Computational_Design.html', label:'1.1.1 Intro to CD'},
+      {href:'Unit-1-[Computational Design in Architecture]/1.2_handles_Manipulators.html', label:'1.2 Handles & Manipulators'},
+      {href:'Unit-1-[Computational Design in Architecture]/1.3_visual_Programming.html', label:'1.3 Visual Programming'},
+      {href:'Unit-2-[Topological Design Process and Form Finding]/2.1_contemporary_Geometries.html', label:'2.1 Contemporary Geometries'},
+      {href:'Unit-3-[Digital and analog fabrication Techniques]/3.1_digital_fabrication.html', label:'3.1 Digital Fabrication'},
+      {href:'Unit-4-[Building Iniformation Modeling (BIM)]/4.1_introduction_BIM.html', label:'4.1 Intro to BIM'},
+      {href:'final_project.html', label:'Final Project'},
+    ];
+    document.getElementById('sidebar').innerHTML = `
+      <div class="sidebar-inner">
+        ${links.map(l=>`<a class="${activeHref===l.href?'active':''}" href="${l.href}">${l.label}</a>`).join('')}
+      </div>`;
+  }
+
+  // Anti-copy/screenshot (students only)
+  function enforceStudentProtection() {
+    const s = JSON.parse(localStorage.getItem('sessionUser')||'null');
+    if (!s || s.role!=='student') return; // admins can copy/screenshot
+    document.addEventListener('contextmenu', e=>e.preventDefault());
+    document.addEventListener('keydown', (e)=>{
+      // Block common copy / print-screen
+      if (e.ctrlKey && (e.key.toLowerCase()==='c' || e.key.toLowerCase()==='p' || e.key.toLowerCase()==='s')) e.preventDefault();
+      if (e.key==='PrintScreen') {
+        e.preventDefault();
+        // attempt to clear clipboard / mask screen
+        const mask = document.createElement('div');
+        mask.style.cssText='position:fixed;inset:0;background:#000;opacity:.8;z-index:99999';
+        document.body.appendChild(mask);
+        setTimeout(()=>mask.remove(), 600);
+      }
+    });
+    document.body.classList.add('no-select');
+  }
+</script>
+
+
+</head>
+<body>
+  <div id="topbar"></div>
+  <div class="page-wrap">
+    <aside id="sidebar"></aside>
+    <main class="content">
+      <h1>Welcome to Computational Design in Architecture</h1>
+      <p>This course introduces the principles and practices of computational design in the architectural domain, with a focus on parametric thinking, algorithmic workflows, data-driven visualization, and digital fabrication.</p>
+
+      <!-- Progress -->
+      <section class="progress-grid">
+        <div>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          <div class="progress-label">Overall Progress</div>
+        </div>
+        <div class="circle-wrap">
+          <svg width="160" height="160">
+            <circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="14" fill="none"></circle>
+            <circle id="progressCircle" cx="80" cy="80" r="70" stroke="#2563eb" stroke-width="14" fill="none"
+              stroke-linecap="round" stroke-dasharray="440" stroke-dashoffset="440"></circle>
+          </svg>
+          <div class="circle-label">Completion</div>
+        </div>
+        <div class="stepper">
+          <div class="step">Welcome</div>
+          <div class="step">Unit 0</div>
+          <div class="step">Unit 1</div>
+          <div class="step">Unit 2</div>
+          <div class="step">Unit 3</div>
+          <div class="step">Unit 4</div>
+          <div class="step">Final</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Announcements</h2>
+        <div id="announcementContainer" class="stack"></div>
+        <p class="muted">New announcements posted by the administrator appear here.</p>
+      </section>
+
+      <!-- Forum -->
+      <section class="card">
+        <h3>Course Q&A / Discussion</h3>
+        <div id="forumContainer"></div>
+        <div class="forum-compose">
+          <textarea id="forumMessage" placeholder="Start a discussion or ask a course-related question..."></textarea>
+          <button class="btn" onclick="postMessage('00_intro')">Post</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    renderChrome('00_intro.html');
+    enforceStudentProtection();
+    markPageComplete('00_intro');
+    renderProgress();
+    loadForum('00_intro');
+    loadAnnouncements();
+  </script>
+</body>
+</html>

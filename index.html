@@ -1,35 +1,115 @@
+<!-- /index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LMS Login</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Computational Design in Architecture — Welcome / Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="config/firebase-config.js"></script>
-  <script src="js/auth.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="config/firebase-config.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <style>
+    /* Minimal hero look for login page only */
+    body { background: linear-gradient(135deg,#f7f9fc,#eef2f7); }
+    .login-wrap {
+      max-width: 420px; margin: 8vh auto; background: #fff; border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 28px;
+    }
+    .brand { text-align:center; margin-bottom: 18px; }
+    .brand h1 { margin: 0; font-weight: 700; }
+    .muted { color:#6b7280; font-size: .95rem; text-align:center; margin: 8px 0 18px; }
+    .field { margin-bottom: 12px; }
+    .field label { display:block; font-weight: 600; margin-bottom: 6px; }
+    .field input {
+      width:100%; padding: 12px 14px; border:1px solid #e5e7eb; border-radius: 10px;
+      font-size: 1rem; outline: none;
+    }
+    .btn {
+      display:block; width:100%; padding: 12px 14px; border-radius: 12px; border: none;
+      background:#1f2937; color:#fff; font-weight:700; cursor:pointer;
+    }
+    .btn.secondary { background:#374151; margin-top:8px; }
+    .code-group { display:none; margin-top: 10px; }
+    .tiny { font-size: .85rem; text-align:center; margin-top: 10px; color:#6b7280; }
+  </style>
 </head>
 <body>
-  <div class="login-container">
-    <h1>Welcome to Computational Design in Architecture LMS</h1>
-    <form onsubmit="event.preventDefault(); loginUser(email.value, password.value)">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
+  <div class="login-wrap">
+    <div class="brand">
+      <h1>Computational Design in Architecture</h1>
+      <div class="muted">A supportive environment for students and staff alike.</div>
+    </div>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" placeholder="e.g., Ayele1" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Your password" autocomplete="current-password" />
+    </div>
+    <button class="btn" id="loginBtn">Login</button>
+
+    <div class="code-group" id="codeGroup">
+      <div class="field">
+        <label for="verifyCode">Verification code (emailed)</label>
+        <input id="verifyCode" placeholder="6-digit code" inputmode="numeric" />
+      </div>
+      <button class="btn" id="verifyBtn">Verify & Continue</button>
+    </div>
+
+    <button class="btn secondary" id="resetBtn" title="Reset password with email verification">Reset Password</button>
+    <div class="tiny">Use your real email + username from the course list. Admin controls availability of quizzes.</div>
   </div>
 
-
   <script>
-    emailjs.init("zpLGGHu-3-PeFLptL");
+    // Login flow with EmailJS verification then create session
+    let pendingUser = null;
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      try {
+        pendingUser = await login(username, password);
+        document.getElementById('codeGroup').style.display = 'block';
+        alert('A 6-digit verification code was sent to your email.');
+      } catch (e) {
+        alert(e.message);
+      }
+    });
+
+    document.getElementById('verifyBtn').addEventListener('click', async () => {
+      const code = document.getElementById('verifyCode').value.trim();
+      if (!pendingUser) return alert('No pending login. Please try logging in again.');
+      if (!verifyCode(pendingUser.email, code)) return alert('Invalid or expired code.');
+      const session = await createSession(pendingUser);
+      // Admin lands on dashboard, students land on tutorial page
+      if (session.role === 'admin') location.href = 'admin.html';
+      else location.href = '00_navigation_tutorial.html';
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', async () => {
+      const username = prompt('Enter your username to reset password:');
+      if (!username) return;
+      const newPass = prompt('Enter a new password:');
+      if (!newPass) return;
+      try {
+        // Send verify code to email by first locating user from users.json
+        const res = await fetch('data/users.json'); const users = await res.json();
+        const user = users.find(u => u.username === username);
+        if (!user) return alert('User not found.');
+        await sendVerificationCode(user.email);
+        const code = prompt('Enter the verification code sent to your email:');
+        if (!verifyCode(user.email, code)) return alert('Invalid/expired code.');
+        await resetPassword(username, newPass);
+        alert('Password changed successfully.');
+      } catch (err) { alert(err.message); }
+    });
   </script>
-<!--
-
-<script>
-  (function() {emailjs.init("zpLGGHu-3-PeFLptL"); // not the private key!})();
-</script>
-
--->
 </body>
 </html>

@@ -1,72 +1,72 @@
-// --- AUTH.JS ---
+// js/auth.js
+// Authentication, EmailJS verification, role detection, sessions
 
+// Firebase + Firestore already initialized in firebase-config.js
+const db = firebase.firestore();
 
+// --- EmailJS init ---
+(function() {
+  emailjs.init("zpLGGHu-3-PeFLptL"); // your public key
+})();
 
-async function loginUser(email, password) {
-  // Load users.json
-  const res = await fetch("./data/users.json");
-  const users = await res.json();
-  const user = users.find(u => u.email === email && u.password === password);
-
-  if (!user) {
-    alert("Invalid credentials!");
-    return;
-  }
-
-  // EmailJS verification
+// --- Helper: send verification email ---
+async function sendVerificationCode(email) {
   const code = Math.floor(100000 + Math.random() * 900000); // 6-digit
-  localStorage.setItem("verificationCode", code);
+  localStorage.setItem(`verify_${email}`, JSON.stringify({ code, ts: Date.now() }));
 
-  emailjs.send("service_ozngnh9", "template_mcxm9mc", {
+  await emailjs.send("service_ozngnh9", "template_c6pl9c9", {
     to_email: email,
     code: code
-  }).then(() => {
-    const entered = prompt("A 6-digit code was sent to your email. Enter it:");
-    if (parseInt(entered) === code) {
-      // Save session in localStorage
-      localStorage.setItem("currentUser", JSON.stringify(user));
-
-      // Also store session in Firestore for cross-device persistence
-      db.collection("sessions").doc(user.email).set({
-        email: user.email,
-        role: user.role,
-        lastLogin: new Date()
-      });
-
-      if (user.role === "admin") {
-        window.location.href = "admin.html";
-      } else {
-        window.location.href = "00_navigation_tutorial.html";
-      }
-    } else {
-      alert("Invalid verification code!");
-    }
   });
+
+  return code;
 }
 
-function logoutUser() {
-  localStorage.removeItem("currentUser");
-  window.location.href = "index.html";
+// --- Login handler ---
+async function login(username, password) {
+  const res = await fetch("data/users.json");
+  const users = await res.json();
+  const user = users.find(u => u.username === username && u.password === password);
+
+  if (!user) throw new Error("Invalid credentials");
+
+  // Send verification email
+  await sendVerificationCode(user.email);
+  return user;
 }
 
-function changePassword(email) {
-  const code = Math.floor(100000 + Math.random() * 900000);
-  emailjs.send("service_ozngnh9", "template_mcxm9mc", {
-    to_email: email,
-    code: code
-  }).then(() => {
-    const entered = prompt("Enter the 6-digit code sent to your email:");
-    if (parseInt(entered) === code) {
-      const newPass = prompt("Enter your new password:");
-      updatePassword(email, newPass);
-    }
-  });
+// --- Verify code ---
+function verifyCode(email, inputCode) {
+  const saved = JSON.parse(localStorage.getItem(`verify_${email}`) || "null");
+  if (!saved) return false;
+  if (Date.now() - saved.ts > 10 * 60 * 1000) return false; // 10 min expiry
+  return saved.code == inputCode;
 }
-async function updatePassword(email, newPass) {
+
+// --- Store session in Firestore ---
+async function createSession(user) {
+  const session = {
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  localStorage.setItem("sessionUser", JSON.stringify(session));
+  await db.collection("sessions").doc(user.username).set(session, { merge: true });
+
+  return session;
+}
+
+// --- Logout ---
+async function logout() {
+  localStorage.removeItem("sessionUser");
+  location.href = "index.html";
+}
+
+// --- Password reset ---
+async function resetPassword(username, newPass) {
   // Update in Firestore
-  await db.collection("users").doc(email).set({ password: newPass }, { merge: true });
-  alert("Password updated successfully!");
+  await db.collection("users").doc(username).set({ password: newPass }, { merge: true });
+  alert("Password updated successfully");
 }
-
-
-
