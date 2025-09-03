@@ -1,50 +1,82 @@
-// js/forum.js
-// Forum system (per page, synced with Firestore)
-
-const forumDb = firebase.firestore();
-
-// Load forum posts for the current page
-async function loadForum(pageId) {
-  const container = document.getElementById("forumContainer");
-  container.innerHTML = "<p>Loading forum...</p>";
-
-  const snap = await forumDb.collection("forum").where("pageId", "==", pageId).orderBy("timestamp").get();
-  container.innerHTML = "";
-
-  snap.forEach(doc => {
-    const post = doc.data();
-    const div = document.createElement("div");
-    div.className = "forum-post";
-    div.innerHTML = `
-      <div class="forum-avatar">${post.user[0].toUpperCase()}</div>
-      <div class="forum-content">
-        <b>${post.user}</b> <small>${post.timestamp.toDate().toLocaleString()}</small>
-        <p>${post.message}</p>
-      </div>
-    `;
-    container.appendChild(div);
-  });
-}
-
-// Post a new message
-async function postMessage(pageId) {
-  const msgInput = document.getElementById("forumMessage");
-  const msg = msgInput.value.trim();
-  if (!msg) return;
-
-  const session = JSON.parse(localStorage.getItem("sessionUser") || "null");
-  if (!session) {
-    alert("You must be logged in to post.");
-    return;
+/* js/forum.js
+   Simple forum using Firestore, per-page threads.
+   Exposes forumMount(container)
+*/
+(function(){
+  async function submitPost(pageId, user, text){
+    if(!user) throw new Error('login required');
+    const collection = window.db.collection('forums').doc(pageId).collection('posts');
+    await collection.add({
+      userEmail: user.email,
+      name: user.name,
+      text,
+      createdAt: Date.now()
+    });
   }
 
-  await forumDb.collection("forum").add({
-    pageId,
-    user: session.username,
-    message: msg,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  });
+  async function loadPosts(pageId, container){
+    container.innerHTML = '<p class="muted">Loading forum...</p>';
+    const postsRef = window.db.collection('forums').doc(pageId).collection('posts').orderBy('createdAt','desc');
+    postsRef.get().then(snapshot => {
+      container.innerHTML = '';
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const box = document.createElement('div');
+        box.className = 'post card';
+        box.innerHTML = `<div class="meta">${d.name} • ${new Date(d.createdAt).toLocaleString()}</div><div>${d.text}</div>`;
+        container.appendChild(box);
+      });
+    });
+  }
 
-  msgInput.value = "";
-  loadForum(pageId);
-}
+  // live listener
+  function attachRealtime(pageId, container){
+    const postsRef = window.db.collection('forums').doc(pageId).collection('posts').orderBy('createdAt','desc');
+    postsRef.onSnapshot(snapshot => {
+      container.innerHTML = '';
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const box = document.createElement('div');
+        box.className = 'post card';
+        box.innerHTML = `<div class="meta">${d.name} • ${new Date(d.createdAt).toLocaleString()}</div><div>${d.text}</div>`;
+        container.appendChild(box);
+      });
+    });
+  }
+
+  window.forumMount = function(container){
+    container.innerHTML = '';
+    const mount = document.createElement('div');
+    mount.className = 'forum card';
+    mount.innerHTML = `
+      <h4>Discussion</h4>
+      <textarea id="forumText" placeholder="Write a post..."></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="forumPostBtn">Post</button>
+      </div>
+      <div id="forumPosts" style="margin-top:12px"></div>
+    `;
+    container.appendChild(mount);
+    const postsContainer = mount.querySelector('#forumPosts');
+
+    // attach realtime if possible
+    try{
+      attachRealtime(window.PAGE.id, postsContainer);
+    }catch(e){
+      loadPosts(window.PAGE.id, postsContainer);
+    }
+
+    mount.querySelector('#forumPostBtn').addEventListener('click', async () => {
+      const txtEl = mount.querySelector('#forumText');
+      const txt = txtEl.value.trim();
+      if(!txt){ alert('Enter text'); return; }
+      if(!window.currentUser){ alert('Please login'); return; }
+      try{
+        await submitPost(window.PAGE.id, window.currentUser, txt);
+        txtEl.value = '';
+      }catch(e){
+        console.error(e); alert('Failed to post - check network');
+      }
+    });
+  };
+})();

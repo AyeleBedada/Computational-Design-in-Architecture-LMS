@@ -1,69 +1,80 @@
-// js/progress.js
-// Progress tracking system
+/* js/progress.js
+   Handles global progress UI (linear, circular stub, stepped)
+   Displays checkmarks as steps complete.
+*/
+(function(){
+  function renderProgressWidget(){
+    const main = document.querySelector('.main') || document.body;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'card';
+    wrapper.style.marginBottom = '12px';
+    wrapper.innerHTML = `
+      <h4>My Progress</h4>
+      <div id="globalProgressBar" class="progress-bar" style="height:18px"><i id="globalProgressFill"></i></div>
+      <div style="display:flex;gap:8px;margin-top:8px" id="stepper"></div>
+    `;
+    main.prepend(wrapper);
 
-const PROGRESS_KEY = "user_progress";
-
-function getProgress() {
-  return JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
-}
-
-function saveProgress(p) {
-  localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
-}
-
-// Mark page as visited (1%)
-function markPageComplete(pageId) {
-  const p = getProgress();
-  if (!p.pages) p.pages = {};
-  if (!p.pages[pageId]) {
-    p.pages[pageId] = true;
-    updateTotalProgress(p);
-  }
-  saveProgress(p);
-}
-
-// Update quiz score (6% or 7%)
-function setQuizScore(quizId, scorePercent, weight) {
-  const p = getProgress();
-  if (!p.quizzes) p.quizzes = {};
-  p.quizzes[quizId] = { score: scorePercent, weight };
-  updateTotalProgress(p);
-  saveProgress(p);
-}
-
-// Calculate total progress
-function updateTotalProgress(p) {
-  let total = 0;
-
-  // Pages (1% each)
-  if (p.pages) total += Object.keys(p.pages).length;
-
-  // Quizzes
-  if (p.quizzes) {
-    for (const q of Object.values(p.quizzes)) {
-      total += (q.score / 100) * q.weight;
-    }
-  }
-
-  p.total = Math.min(100, total);
-}
-
-// Render progress bar
-function renderProgress() {
-  const p = getProgress();
-  const total = p.total || 0;
-
-  const bar = document.querySelector("#progressBar");
-  const circle = document.querySelector("#progressCircle");
-  const stepper = document.querySelectorAll(".step");
-
-  if (bar) bar.style.width = total + "%";
-  if (circle) circle.style.strokeDashoffset = 440 - (440 * total) / 100;
-  if (stepper.length) {
-    stepper.forEach((s, i) => {
-      if (i < total / (100 / stepper.length)) {
-        s.classList.add("done");
-      }
+    // stepper items (pages in order)
+    const steps = ['Unit0','1.1','1.2','2.1','3.1','4.1','Final'];
+    const stepper = wrapper.querySelector('#stepper');
+    steps.forEach((s,i)=>{
+      const it = document.createElement('div');
+      it.style.minWidth = '80px';
+      it.style.padding = '8px';
+      it.style.background = '#fff';
+      it.style.border = '1px solid #eef3fb';
+      it.style.borderRadius = '8px';
+      it.id = 'step_'+s;
+      it.innerHTML = `<div style="font-size:12px">${s}</div><div class="muted" id="stepchk_${s}">○</div>`;
+      stepper.appendChild(it);
     });
   }
-}
+
+  async function updateProgress(){
+    const fill = document.getElementById('globalProgressFill');
+    if(!fill) return;
+    let progress = 0;
+    try{
+      if(window.currentUser && window.currentUser.email){
+        const doc = await window.db.collection('users').doc(window.currentUser.email).get();
+        if(doc.exists){
+          const data = doc.data();
+          progress = data.progress || 0;
+          const visited = data.visitedPages || {};
+          // assign step checkmarks if visited any page mapping
+          const map = {
+            'Unit0': '0_quiz_0',
+            '1.1': '1.1.1_introduction_Computational_Design',
+            '1.2': '1.2_handles_Manipulators',
+            '2.1': '2.1_contemporary_Geometries',
+            '3.1': '3.1_digital_fabrication',
+            '4.1': '4.1_introduction_BIM',
+            'Final': 'final_project'
+          };
+          for(const step in map){
+            const chk = document.getElementById('stepchk_'+step);
+            if(!chk) continue;
+            if(visited[map[step]]) chk.textContent = '✔'; else chk.textContent = '○';
+          }
+        }
+      } else {
+        // guest
+        progress = parseInt(localStorage.getItem('guest_progress') || '0');
+      }
+    }catch(e){ console.warn(e); }
+    fill.style.width = Math.min(100,progress) + '%';
+    const lbl = document.querySelector('#globalProgressFill').parentElement.nextElementSibling;
+    if(lbl) lbl.textContent = `Global progress: ${Math.round(progress)}%`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderProgressWidget();
+    updateProgress();
+    // poll progress periodically
+    setInterval(updateProgress, 5000);
+  });
+
+  // expose small API
+  window.updateGlobalProgress = updateProgress;
+})();

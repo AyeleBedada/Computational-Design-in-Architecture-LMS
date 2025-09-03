@@ -1,17 +1,19 @@
-// js/1.1.1_introduction_Computational_Design.js
-const quiz_1_1_1_questions = [
-  { question: "Which best defines computational design?", options: ["Drawing by hand", "Rule- and algorithm-driven design processes", "Only CAD drafting", "Purely theoretical studies"], answer: 1 },
-  { question: "Computational design most directly enables:", options: ["Manual replication", "Generative variation and optimization", "Removing constraints", "Paper-only outputs"], answer: 1 },
-  { question: "Which skill is central to computational design?", options: ["Algorithmic thinking", "Only painting", "Hand-only modelmaking", "Text editing"], answer: 0 },
-  { question: "Which pairing is common in computational design workflows?", options: ["Rhino + Grasshopper", "Photoshop + Illustrator only", "MS Word + Excel only", "Pen + Paper only"], answer: 0 },
-  { question: "What does parametric mean in this context?", options: ["Driven by parameters and relationships", "Fixed geometry", "Manual drawing", "Historical analysis"], answer: 0 },
-  { question: "Computational design helps with:", options: ["Single static outcome", "Exploration of many solutions", "Avoiding documentation", "Reducing collaboration"], answer: 1 },
-  { question: "Which is a typical output of computational design?", options: ["Generative geometry", "Only text reports", "Only manual sketches", "No physical outputs"], answer: 0 },
-  { question: "Which stage often follows a computational exploration?", options: ["Analysis and refinement", "No change", "Deleting the model", "Publishing unreviewed work"], answer: 0 },
-  { question: "Computational design often integrates with:", options: ["Digital fabrication and performance analysis", "Just pen and ink", "Only legal documents", "Only history textbooks"], answer: 0 },
-  { question: "Who benefits from learning computational design?", options: ["Architects, engineers, and designers", "Only historians", "Only administrators", "Only fabricators"], answer: 0 },
-  { question: "How many questions in this quiz?", options: ["10", "11", "12", "14"], answer: 2 },
-  { question: "Quiz weight (this page) toward course total?", options: ["4%", "6%", "7%", "8%"], answer: 1 }
+/* js/1.1.1_introduction_Computational_Design.js
+   14 questions for quiz on Introduction to Computational Design
+*/
+window.QUESTIONS = [
+  { q: "Computational design most closely means:", options:["Using computation to assist design","Only using AI","Using paperwork","Only modeling in clay"], ans:0 },
+  { q: "Parametric modeling allows:", options:["Static models","Rules-based variability","No change","More paper"], ans:1 },
+  { q: "Iterative design is:", options:["A single try","Repeated improvement","Random drawing","Not useful"], ans:1 },
+  { q: "Handles and manipulators control:", options:["UI only","Geometry parameters","Printing speed","Fonts"], ans:1 },
+  { q: "A lesson plan should allocate time for:", options:["Breaks and reflection","Only lecture","Only exams","No student activity"], ans:0 },
+  { q: "Algorithmic thinking helps in:", options:["Automation","Cleaning only","Cooking","Buying"], ans:0 },
+  { q: "Testing design variations is called:", options:["Fabrication","Iteration","Random", "Translation"], ans:1 },
+  { q: "A forum helps with:", options:["Peer feedback","Spamming","Deleting content","Hiding work"], ans:0 },
+  { q: "Persistence across devices is achieved by:", options:["Firestore","Manual email","Clipboard","Screenshots"], ans:0 },
+  { q: "Models can be exported to fabrication using:", options:["STL/OBJ","DOCX","JPEG","TXT"], ans:0 },
+  { q: "Feedback during quiz must be:", options:["Instant","Late","None","After term"], ans:0 },
+  { q: "Academic style should prioritize:", options:["Readability","Flashiness","Advertisements","Noise"], ans:0 },
+  { q: "Progress bars are:", options:["Decorative","Functional indicators","Unrelated","Illegal"], ans:1 },
+  { q: "A course objective should be:", options:["Measurable","Vague","Impossible","Secret"], ans:0 }
 ];
-
-registerQuiz("1.1.1_introduction_Computational_Design", quiz_1_1_1_questions, 6);
