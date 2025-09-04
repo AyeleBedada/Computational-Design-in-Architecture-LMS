@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Exam Part 1</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="topbar"></div>
+<div class="sidebar"></div>
+
+<main>
+<h1>Final Exam Part 1</h1>
+<p>Final exam with forum for discussions and questions.</p>
+
+<section id="forum-section">
+    <h2>Forum</h2>
+    <div id="final_exam_part1-forum-messages"></div>
+    <textarea id="final_exam_part1-forum-input" placeholder="Write your post here..."></textarea>
+    <button id="final_exam_part1-forum-post">Post</button>
+</section>
+
+<section id="quiz-section">
+    <h2>Final Exam Quiz</h2>
+    <div class="quiz-container" id="final_exam_part1-container"></div>
+    <button class="submitAttempt">Submit Quiz</button>
+</section>
+
+</main>
+
+<script src="../js/auth.js"></script>
+<script src="../js/forum.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/progress.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    AUTH.renderChrome('final_exam_part1');
+    Quiz.initQuizPage(document.getElementById('final_exam_part1-container'), 'quiz_final1');
+    document.getElementById('final_exam_part1-forum-post').addEventListener('click', () => {
+        const text = document.getElementById('final_exam_part1-forum-input').value;
+        FORUM.post('final_exam_part1', text);
+        document.getElementById('final_exam_part1-forum-input').value = '';
+    });
+    FORUM.render('final_exam_part1');
+});
+</script>
+</body>
+</html>

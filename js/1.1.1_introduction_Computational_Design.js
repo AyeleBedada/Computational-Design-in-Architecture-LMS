@@ -1,17 +1,18 @@
-// js/1.1.1_introduction_Computational_Design.js
-const quiz_1_1_1_questions = [
-  { question: "Which best defines computational design?", options: ["Drawing by hand", "Rule- and algorithm-driven design processes", "Only CAD drafting", "Purely theoretical studies"], answer: 1 },
-  { question: "Computational design most directly enables:", options: ["Manual replication", "Generative variation and optimization", "Removing constraints", "Paper-only outputs"], answer: 1 },
-  { question: "Which skill is central to computational design?", options: ["Algorithmic thinking", "Only painting", "Hand-only modelmaking", "Text editing"], answer: 0 },
-  { question: "Which pairing is common in computational design workflows?", options: ["Rhino + Grasshopper", "Photoshop + Illustrator only", "MS Word + Excel only", "Pen + Paper only"], answer: 0 },
-  { question: "What does parametric mean in this context?", options: ["Driven by parameters and relationships", "Fixed geometry", "Manual drawing", "Historical analysis"], answer: 0 },
-  { question: "Computational design helps with:", options: ["Single static outcome", "Exploration of many solutions", "Avoiding documentation", "Reducing collaboration"], answer: 1 },
-  { question: "Which is a typical output of computational design?", options: ["Generative geometry", "Only text reports", "Only manual sketches", "No physical outputs"], answer: 0 },
-  { question: "Which stage often follows a computational exploration?", options: ["Analysis and refinement", "No change", "Deleting the model", "Publishing unreviewed work"], answer: 0 },
-  { question: "Computational design often integrates with:", options: ["Digital fabrication and performance analysis", "Just pen and ink", "Only legal documents", "Only history textbooks"], answer: 0 },
-  { question: "Who benefits from learning computational design?", options: ["Architects, engineers, and designers", "Only historians", "Only administrators", "Only fabricators"], answer: 0 },
-  { question: "How many questions in this quiz?", options: ["10", "11", "12", "14"], answer: 2 },
-  { question: "Quiz weight (this page) toward course total?", options: ["4%", "6%", "7%", "8%"], answer: 1 }
+const quiz1_1_1 = [
+    { question: "Computational design primarily uses?", options: ["Algorithms", "Manual Drafting", "Physical Models", "Paintings"], answer: 0, weight: 1 },
+    { question: "Lesson objectives include?", options: ["Understanding CAD", "Physical Fitness", "Cooking Skills", "Writing Essays"], answer: 0, weight: 1 },
+    { question: "Which software is commonly used?", options: ["Rhinoceros", "Photoshop", "Excel", "Word"], answer: 0, weight: 1 },
+    { question: "Forums are useful for?", options: ["Discussion", "Printing", "Video Editing", "Archiving"], answer: 0, weight: 1 },
+    { question: "What is parametric design?", options: ["Design driven by parameters", "Painting technique", "Manual sculpting", "Drafting with pen"], answer: 0, weight: 1 },
+    { question: "Students track their progress using?", options: ["Progress Bar", "Notebook", "Whiteboard", "PDF"], answer: 0, weight: 1 },
+    { question: "Quiz weight is?", options: ["14%", "10%", "15%", "20%"], answer: 0, weight: 1 },
+    { question: "How many questions in this quiz?", options: ["14", "10", "12", "15"], answer: 0, weight: 1 },
+    { question: "Password is stored in?", options: ["localStorage", "users.json", "server database", "cookies"], answer: 0, weight: 1 },
+    { question: "Who controls quiz availability?", options: ["Admin", "Student", "Teacher Assistant", "System"], answer: 0, weight: 1 },
+    { question: "Live feedback shows?", options: ["Correct/Wrong", "Score Later", "No Feedback", "PDF Output"], answer: 0, weight: 1 },
+    { question: "Top menu is visible?", options: ["After login", "Always", "Never", "Optional"], answer: 0, weight: 1 },
+    { question: "Left sidebar shows?", options: ["Navigation Links", "Quiz Answers", "Forum Posts", "Profile"], answer: 0, weight: 1 },
+    { question: "Which progress type is included?", options: ["Linear, Circular, Stepped, Animated", "Linear only", "Circular only", "None"], answer: 0, weight: 1 }
 ];
 
-registerQuiz("1.1.1_introduction_Computational_Design", quiz_1_1_1_questions, 6);
+localStorage.setItem('quiz1_1_1', JSON.stringify(quiz1_1_1));

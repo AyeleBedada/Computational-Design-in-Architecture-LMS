@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.1 Introduction to BIM</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="topbar"></div>
+<div class="sidebar"></div>
+
+<main>
+<h1>Introduction to Building Information Modeling (BIM)</h1>
+<p>Lesson plan and learning objectives.</p>
+
+<section id="forum-section">
+    <h2>Forum</h2>
+    <div id="4.1-forum-messages"></div>
+    <textarea id="4.1-forum-input" placeholder="Write your post here..."></textarea>
+    <button id="4.1-forum-post">Post</button>
+</section>
+
+<section id="quiz-section">
+    <h2>Quiz</h2>
+    <div class="quiz-container" id="4.1-container"></div>
+    <button class="submitAttempt">Submit Quiz</button>
+</section>
+
+</main>
+
+<script src="../js/auth.js"></script>
+<script src="../js/forum.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/4.1_introduction_BIM.js"></script>
+<script src="../js/progress.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    AUTH.renderChrome('4.1');
+    Quiz.initQuizPage(document.getElementById('4.1-container'), 'quiz4.1');
+    document.getElementById('4.1-forum-post').addEventListener('click', () => {
+        const text = document.getElementById('4.1-forum-input').value;
+        FORUM.post('4.1', text);
+        document.getElementById('4.1-forum-input').value = '';
+    });
+    FORUM.render('4.1');
+});
+</script>
+</body>
+</html>

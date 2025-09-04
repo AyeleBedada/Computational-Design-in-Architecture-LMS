@@ -1,170 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>1.2 — Handles and Manipulators (Quiz 6%)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../css/style.css" />
-  <!-- Firebase / EmailJS -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="../config/firebase-config.js" defer></script>
-  <script src="../js/auth.js" defer></script>
-  <script src="../js/progress.js" defer></script>
-  <script src="../js/forum.js" defer></script>
-  <script src="../js/quiz.js" defer></script>
-  <script src="../js/1.2_handles_Manipulators.js" defer></script>
-  <script src="../js/admin.js" defer></script>
-
-
-<script>
-  function requireSession() {
-    const session = JSON.parse(localStorage.getItem('sessionUser')||'null');
-    if (!session) location.href = 'index.html';
-    return session;
-  }
-  function renderChrome(activeHref) {
-    const s = requireSession();
-    const role = s.role;
-
-    // Top bar
-    document.getElementById('topbar').innerHTML = `
-      <div class="topbar-inner">
-        <div class="logo">CDA</div>
-        <nav class="topnav">
-          <a href="00_navigation_tutorial.html">Tutorial</a>
-          <a href="00_intro.html">Intro</a>
-          <a href="Unit-0-[Course Introduction]/0_course_syllabus.html">Syllabus</a>
-          <a href="complete.html">Completion</a>
-        </nav>
-        <div class="top-actions">
-          <span class="userchip">${s.username} (${s.role})</span>
-          ${role==='admin' ? '<a class="btn tiny" href="admin.html">Admin</a>' : ''}
-          <button class="btn tiny outline" onclick="logout()">Logout</button>
-        </div>
-      </div>`;
-
-    // Sidebar
-    const links = [
-      {href:'00_navigation_tutorial.html', label:'How to Navigate'},
-      {href:'00_intro.html', label:'Course Introduction'},
-      {href:'00_concern.html', label:'Concerns & Suggestions'},
-      {href:'Unit-0-[Course Introduction]/0_unit_introduction.html', label:'Unit 0: Intro'},
-      {href:'Unit-0-[Course Introduction]/0_course_syllabus.html', label:'Syllabus'},
-      {href:'Unit-0-[Course Introduction]/0_rubrics.html', label:'Rubrics'},
-      {href:'Unit-0-[Course Introduction]/0_pre_assessment.html', label:'Pre-Assessment'},
-      {href:'Unit-0-[Course Introduction]/0_quiz_0.html', label:'Unit 0 Quiz'},
-      {href:'Unit-1-[Computational Design in Architecture]/1.1_[Introduction to Computational Design]/1.1.1_introduction_Computational_Design.html', label:'1.1.1 Intro to CD'},
-      {href:'Unit-1-[Computational Design in Architecture]/1.2_handles_Manipulators.html', label:'1.2 Handles & Manipulators'},
-      {href:'Unit-1-[Computational Design in Architecture]/1.3_visual_Programming.html', label:'1.3 Visual Programming'},
-      {href:'Unit-2-[Topological Design Process and Form Finding]/2.1_contemporary_Geometries.html', label:'2.1 Contemporary Geometries'},
-      {href:'Unit-3-[Digital and analog fabrication Techniques]/3.1_digital_fabrication.html', label:'3.1 Digital Fabrication'},
-      {href:'Unit-4-[Building Iniformation Modeling (BIM)]/4.1_introduction_BIM.html', label:'4.1 Intro to BIM'},
-      {href:'final_project.html', label:'Final Project'},
-    ];
-    document.getElementById('sidebar').innerHTML = `
-      <div class="sidebar-inner">
-        ${links.map(l=>`<a class="${activeHref===l.href?'active':''}" href="${l.href}">${l.label}</a>`).join('')}
-      </div>`;
-  }
-
-  // Anti-copy/screenshot (students only)
-  function enforceStudentProtection() {
-    const s = JSON.parse(localStorage.getItem('sessionUser')||'null');
-    if (!s || s.role!=='student') return; // admins can copy/screenshot
-    document.addEventListener('contextmenu', e=>e.preventDefault());
-    document.addEventListener('keydown', (e)=>{
-      // Block common copy / print-screen
-      if (e.ctrlKey && (e.key.toLowerCase()==='c' || e.key.toLowerCase()==='p' || e.key.toLowerCase()==='s')) e.preventDefault();
-      if (e.key==='PrintScreen') {
-        e.preventDefault();
-        // attempt to clear clipboard / mask screen
-        const mask = document.createElement('div');
-        mask.style.cssText='position:fixed;inset:0;background:#000;opacity:.8;z-index:99999';
-        document.body.appendChild(mask);
-        setTimeout(()=>mask.remove(), 600);
-      }
-    });
-    document.body.classList.add('no-select');
-  }
-</script>
-
-
-
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Handles & Manipulators</title>
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <div id="topbar"></div>
-  <div class="page-wrap">
-    <aside id="sidebar"></aside>
-    <main class="content">
-      <h1>1.2 — Handles and Manipulators</h1>
-      <h3>Learning Objectives</h3>
-      <ul>
-        <li>Understand the role of handles in parametric modeling</li>
-        <li>Manipulate objects dynamically using manipulators</li>
-        <li>Apply interactive modeling techniques in design software</li>
-      </ul>
+<div class="topbar"></div>
+<div class="sidebar"></div>
 
-      <h3>Lesson Plan (4 hours)</h3>
-      <ol>
-        <li>Introduction to handles and manipulators</li>
-        <li>Hands-on studio practice</li>
-        <li>Break & attendance</li>
-        <li>Project exercise and discussion</li>
-      </ol>
+<main>
+    <h1>Designing/Modeling with Handles and Manipulators</h1>
+    <p>Lesson plan and learning objectives.</p>
 
-      <section class="card">
-        <h3>Forum — Discussion</h3>
-        <div id="forumContainer"></div>
-        <div class="forum-compose">
-          <textarea id="forumMessage" placeholder="Share tips and challenges with manipulators..."></textarea>
-          <button class="btn" onclick="postMessage('1.2_handles_Manipulators')">Post</button>
+    <section id="forum-section">
+        <h2>Forum</h2>
+        <div id="1.2-forum-messages"></div>
+        <textarea id="1.2-forum-input" placeholder="Write your post here..."></textarea>
+        <button id="1.2-forum-post">Post</button>
+    </section>
+
+    <section id="quiz-section">
+        <h2>Quiz</h2>
+        <div class="quiz-container" id="1.2-container"></div>
+        <button class="submitAttempt">Submit Quiz</button>
+        <div class="quiz-feedback">
+            <span class="attemptBadge"></span>
+            <span class="quizScore"></span>
+            <span class="globalScore"></span>
         </div>
-      </section>
+    </section>
+</main>
 
-      <section class="card">
-        <h3>Quiz — 12 Questions (6%)</h3>
-        <div id="availability" class="banner info">Checking availability...</div>
-        <div id="quizContainer"></div>
-      </section>
-
-      <section class="progress-grid">
-        <div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><div class="progress-label">Overall Progress</div></div>
-        <div class="circle-wrap">
-          <svg width="160" height="160"><circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="14" fill="none"></circle>
-            <circle id="progressCircle" cx="80" cy="80" r="70" stroke="#2563eb" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="440" stroke-dashoffset="440"></circle>
-          </svg>
-          <div class="circle-label">Completion</div>
-        </div>
-        <div class="stepper"><div class="step">Welcome</div><div class="step">Unit 0</div><div class="step">Unit 1</div><div class="step">Unit 2</div><div class="step">Unit 3</div><div class="step">Unit 4</div><div class="step">Final</div></div>
-      </section>
-    </main>
-  </div>
-
-  <script>
-    function fixHref(h){ return h; }
-    renderChrome(fixHref('Unit-1-[Computational Design in Architecture]/1.2_handles_Manipulators.html'));
-    enforceStudentProtection();
-    markPageComplete('1.2_handles_Manipulators');
-    renderProgress();
-    loadForum('1.2_handles_Manipulators');
-
-    (async function(){
-      const ok = await getQuizAvailability('1.2_handles_Manipulators');
-      const banner = document.getElementById('availability');
-      if (!ok) {
-        banner.className='banner warn';
-        banner.textContent='This quiz is currently locked by the administrator.';
-        document.getElementById('quizContainer').innerHTML='<p>Locked</p>';
-        return;
-      }
-      banner.className='banner success';
-      banner.textContent='This quiz is open.';
-      if (typeof QUIZ_12_QUESTIONS!=='undefined') {
-        loadQuiz('1.2_handles_Manipulators', QUIZ_12_QUESTIONS, 6);
-      }
-    })();
-  </script>
+<script src="../js/auth.js"></script>
+<script src="../js/forum.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/1.2_handles_Manipulators.js"></script>
+<script src="../js/progress.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    AUTH.renderChrome('1.2');
+    Quiz.initQuizPage(document.getElementById('1.2-container'), 'quiz1.2');
+    document.getElementById('1.2-forum-post').addEventListener('click', () => {
+        const text = document.getElementById('1.2-forum-input').value;
+        FORUM.post('1.2', text);
+        document.getElementById('1.2-forum-input').value = '';
+    });
+    FORUM.render('1.2');
+});
+</script>
 </body>
 </html>

@@ -1,17 +1,18 @@
-// js/1.2_handles_Manipulators.js
-const quiz_1_2_handles_questions = [
-  { question: "What is a 'handle' in a parametric UI?", options: ["An interactive control (slider/point) to manipulate parameters", "A file format", "A rubric item", "A printing setting"], answer: 0 },
-  { question: "Manipulators allow designers to:", options: ["Explore variations interactively", "Erase models", "Only print", "Avoid tests"], answer: 0 },
-  { question: "An example of a manipulator is:", options: ["Slider for radius", "Only PDF export", "Only historical text", "Only grades"], answer: 0 },
-  { question: "Handles improve user experience by:", options: ["Providing immediate visual feedback for parameter changes", "Blocking changes", "Hiding models", "Only printing"], answer: 0 },
-  { question: "Manipulators can be used to:", options: ["Control geometry, tolerate input bounds, and animate parameters", "Only draw lines", "Only make exams", "Only grade"], answer: 0 },
-  { question: "A proper handle should:", options: ["Be intuitive and limited to useful ranges", "Be hidden always", "Allow destructive values without warning", "Never update visuals"], answer: 0 },
-  { question: "Handles are common in which environments?", options: ["Grasshopper sliders, UI panels in scripting tools", "Only spreadsheets", "Only paper models", "Only CAD 2D"], answer: 0 },
-  { question: "Manipulators can be linked to:", options: ["Multiple underlying parameters", "Only a single file", "Only a printed page", "Only exam results"], answer: 0 },
-  { question: "What is the risk of too many handles?", options: ["Overwhelming the user and confusing exploration", "Faster design", "Better clarity", "No change"], answer: 0 },
-  { question: "Good manipulators help in:", options: ["Rapid prototyping and pedagogy", "Only final grading", "Only printing", "Only history"], answer: 0 },
-  { question: "How many questions in this quiz?", options: ["10", "11", "12", "15"], answer: 2 },
-  { question: "Weight of this quiz?", options: ["6%", "5%", "7%", "8%"], answer: 0 }
+const quiz1_2 = [
+    { question: "Handles and manipulators help in?", options: ["3D modeling", "Painting", "Writing Essays", "Photography"], answer: 0, weight: 1 },
+    { question: "Manipulators allow?", options: ["Scaling, rotating, moving", "Printing", "Cooking", "Running simulations"], answer: 0, weight: 1 },
+    { question: "Weight of quiz?", options: ["14%", "10%", "15%", "20%"], answer: 0, weight: 1 },
+    { question: "Forum is used for?", options: ["Discussion", "Archiving", "Downloading", "Watching videos"], answer: 0, weight: 1 },
+    { question: "Quiz shows live feedback?", options: ["Yes", "No"], answer: 0, weight: 1 },
+    { question: "LocalStorage saves?", options: ["Password, Forum, Progress", "Videos", "PDF", "Emails"], answer: 0, weight: 1 },
+    { question: "Max attempts allowed?", options: ["3", "1", "5", "Unlimited"], answer: 0, weight: 1 },
+    { question: "Progress update type?", options: ["Linear, Stepped, Circular, Animated", "Linear only", "Circular only", "None"], answer: 0, weight: 1 },
+    { question: "Who opens quiz?", options: ["Admin", "Student", "Guest", "TA"], answer: 0, weight: 1 },
+    { question: "Forum posts saved in?", options: ["localStorage", "Server", "Database", "Cookies"], answer: 0, weight: 1 },
+    { question: "Quiz questions correct answer?", options: ["Instantly visible", "After submission", "Never", "Optional"], answer: 0, weight: 1 },
+    { question: "Left sidebar shows?", options: ["Navigation Links", "Answers", "Score", "Forum"], answer: 0, weight: 1 },
+    { question: "Top menu shows?", options: ["After login", "Before login", "Always hidden", "Optional"], answer: 0, weight: 1 },
+    { question: "Quiz total points count?", options: ["14", "10", "15", "12"], answer: 0, weight: 1 }
 ];
 
-registerQuiz("1.2_handles_Manipulators", quiz_1_2_handles_questions, 6);
+localStorage.setItem('quiz1_2', JSON.stringify(quiz1_2));
