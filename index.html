@@ -6,15 +6,18 @@
   <title>Computational Design in Architecture — Login</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* Simple modal styling */
-    .modal { display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; overflow:auto; background:rgba(0,0,0,0.5);}
-    .modal-content { background:#fff; margin:10% auto; padding:20px; border-radius:10px; max-width:400px; position:relative;}
-    .close { position:absolute; right:10px; top:10px; font-size:20px; cursor:pointer; }
+    /* Modal styling */
+    .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.5); }
+    .modal-content { background: #fff; margin: 10% auto; padding: 20px; border-radius: 10px; max-width: 400px; position: relative; }
+    .close { position: absolute; right: 10px; top: 10px; font-size: 20px; cursor: pointer; }
+    .modal label { display: block; margin-top: 10px; }
+    .modal input { width: 100%; padding: 5px; margin-top: 5px; }
+    .error-message { color: red; font-size: 13px; margin-top: 5px; }
   </style>
 </head>
 <body>
   <main class="login-container" aria-labelledby="loginTitle">
-    <h1 id="loginTitle">Computational Design in Architecture - LMS</h1>
+    <h1 id="loginTitle">Computational Design in Architecture LMS</h1>
     <p>Welcome — sign in with your issued email and password to access course materials.</p>
 
     <form id="loginForm" aria-describedby="loginHelp">
@@ -28,5 +31,99 @@
         <button type="submit" class="btn">Login</button>
         <button id="change-pass-btn" type="button" class="btn btn-ghost">Change Password</button>
       </div>
+
       <div id="loginError" class="error-message" role="alert" aria-live="polite"></div>
-      <div id="loginHelp" class="muted" style="margin-top:
+      <div id="loginHelp" class="muted" style="margin-top:8px;font-size:13px">
+        Demo users are defined in <code>data/users.json</code>
+      </div>
+    </form>
+  </main>
+
+  <!-- Change Password Modal -->
+  <div id="changePassModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Change Password</h2>
+      <label for="cp-username">Username</label>
+      <input id="cp-username" type="text" placeholder="Enter your username" />
+      <label for="cp-newpass">New Password</label>
+      <input id="cp-newpass" type="password" placeholder="Enter new password" />
+      <button id="cp-submit-btn" class="btn" style="margin-top:10px;">Submit</button>
+      <div id="cp-message" class="error-message" style="margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <!-- auth must load before we call it -->
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('loginForm');
+      const err = document.getElementById('loginError');
+      const changeBtn = document.getElementById('change-pass-btn');
+      const modal = document.getElementById('changePassModal');
+      const closeModal = document.getElementById('closeModal');
+      const cpSubmit = document.getElementById('cp-submit-btn');
+      const cpMessage = document.getElementById('cp-message');
+
+      // Login handler
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        err.textContent = '';
+        const email = (document.getElementById('email').value || '').trim().toLowerCase();
+        const pwd = (document.getElementById('password').value || '').trim();
+        try {
+          // Check localStorage first
+          const storedPwd = localStorage.getItem(`pw_${email}`);
+          const ok = storedPwd ? storedPwd === pwd : await AUTH.login(email, pwd);
+          if (ok) {
+            location.href = 'Unit-0-[Course Introduction]/0_quiz_0.html';
+          } else {
+            err.textContent = 'Invalid email or password.';
+          }
+        } catch (e) {
+          console.error('Login error', e);
+          err.textContent = 'An error occurred during login.';
+        }
+      });
+
+      // Open Change Password Modal
+      changeBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+        cpMessage.textContent = '';
+      });
+
+      // Close Modal
+      closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
+      window.addEventListener('click', (ev) => { if (ev.target === modal) modal.style.display = 'none'; });
+
+      // Change Password submit
+      cpSubmit.addEventListener('click', async () => {
+        const username = (document.getElementById('cp-username').value || '').trim();
+        const newPass = (document.getElementById('cp-newpass').value || '').trim();
+        if (!username || !newPass) {
+          cpMessage.textContent = 'Please enter username and new password.';
+          return;
+        }
+
+        try {
+          const response = await fetch('data/users.json');
+          const users = await response.json();
+          const user = users.find(u => u.username === username);
+          if (!user) {
+            cpMessage.textContent = 'Username not found.';
+            return;
+          }
+          // Save new password in localStorage
+          localStorage.setItem(`pw_${user.email}`, newPass);
+          cpMessage.style.color = 'green';
+          cpMessage.textContent = 'Password changed successfully!';
+        } catch (err) {
+          console.error(err);
+          cpMessage.style.color = 'red';
+          cpMessage.textContent = 'Error updating password.';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
