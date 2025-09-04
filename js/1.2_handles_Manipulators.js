@@ -1,3 +1,24 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '1.2_handles_Manipulators';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        QUIZ.initQuizPage(container, quizId);
+
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
+
+
 const quiz1_2 = [
     { question: "Handles and manipulators help in?", options: ["3D modeling", "Painting", "Writing Essays", "Photography"], answer: 0, weight: 1 },
     { question: "Manipulators allow?", options: ["Scaling, rotating, moving", "Printing", "Cooking", "Running simulations"], answer: 0, weight: 1 },

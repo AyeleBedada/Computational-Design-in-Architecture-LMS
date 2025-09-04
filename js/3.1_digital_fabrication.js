@@ -1,3 +1,25 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '3.1_digital_fabrication';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        QUIZ.initQuizPage(container, quizId);
+
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
+
+
+
 const quiz3_1 = [
     { question: "Digital fabrication includes?", options: ["3D printing, CNC", "Painting", "Cooking", "Sculpting"], answer: 0, weight: 1 },
     { question: "Quiz weight?", options: ["14%", "15%", "10%", "20%"], answer: 0, weight: 1 },

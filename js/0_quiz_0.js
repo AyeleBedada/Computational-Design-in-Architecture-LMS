@@ -1,3 +1,27 @@
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '0_quiz_0';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        // Load quiz data
+        const quizData = JSON.parse(localStorage.getItem(quizId)) || [];
+        QUIZ.initQuizPage(container, quizId);
+
+        // Initialize forum
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
 const quiz0 = [
     { question: "What is the main objective of Unit 0?", options: ["Objective 1", "Objective 2", "Objective 3", "Objective 4"], answer: 0, weight: 1 },
     { question: "What is a forum used for?", options: ["Discussion", "Email", "Printing", "Homework"], answer: 0, weight: 1 },

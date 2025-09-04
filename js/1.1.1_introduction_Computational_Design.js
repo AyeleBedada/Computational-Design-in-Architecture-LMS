@@ -1,3 +1,24 @@
+
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '1.1.1_introduction_Computational_Design';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        QUIZ.initQuizPage(container, quizId);
+
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
+
 const quiz1_1_1 = [
     { question: "Computational design primarily uses?", options: ["Algorithms", "Manual Drafting", "Physical Models", "Paintings"], answer: 0, weight: 1 },
     { question: "Lesson objectives include?", options: ["Understanding CAD", "Physical Fitness", "Cooking Skills", "Writing Essays"], answer: 0, weight: 1 },

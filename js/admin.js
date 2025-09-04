@@ -1,3 +1,52 @@
+
+document.addEventListener('DOMContentLoaded', () => {
+    const session = AUTH.getSession();
+    if(!session || session.role !== 'admin') return alert('Access denied: Admin only.');
+
+    const reportsEl = document.getElementById('adminReports');
+    const csvExportBtn = document.getElementById('exportCSV');
+    const quizToggleEls = document.querySelectorAll('.quiz-toggle');
+
+    function renderReports(){
+        const reports = AUTH.getReports();
+        if(!reportsEl) return;
+        reportsEl.innerHTML = reports.length ? reports.map(rep =>
+            `<div class="report-item">
+                <strong>${rep.email}</strong> — ${rep.quizId} — Attempt ${rep.attempt} — Score: ${rep.score}% — Best: ${rep.best}%
+            </div>`).join('') : '<div>No reports yet</div>';
+    }
+
+    function exportCSV(){
+        const reports = AUTH.getReports();
+        const csvRows = ['Email,Quiz,Attempt,Score,Best,Timestamp'];
+        reports.forEach(r => {
+            csvRows.push([r.email, r.quizId, r.attempt, r.score, r.best, new Date(r.ts).toLocaleString()].join(','));
+        });
+        const blob = new Blob([csvRows.join('\n')], {type:'text/csv'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'lms_reports.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    csvExportBtn?.addEventListener('click', exportCSV);
+    renderReports();
+
+    // Quiz availability toggles
+    quizToggleEls.forEach(el => {
+        const quizId = el.dataset.quiz;
+        const open = AUTH.getQuizOpen();
+        el.checked = !!open[quizId];
+        el.addEventListener('change', () => {
+            open[quizId] = el.checked;
+            AUTH.setQuizOpen(open);
+        });
+    });
+});
+
+
 const Admin = {
     renderDashboard: () => {
         const container = document.getElementById('admin-dashboard');

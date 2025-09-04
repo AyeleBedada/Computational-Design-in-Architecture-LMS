@@ -1,3 +1,24 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '4.1_introduction_BIM';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        QUIZ.initQuizPage(container, quizId);
+
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
+
+
 const quiz4_1 = [
     { question: "BIM stands for?", options: ["Building Information Modeling", "Basic Information Management", "Building Industrial Model", "Binary Information Model"], answer: 0, weight: 1 },
     { question: "Quiz weight?", options: ["15%", "14%", "10%", "20%"], answer: 0, weight: 1 },

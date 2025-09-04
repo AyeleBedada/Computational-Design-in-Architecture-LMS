@@ -1,3 +1,45 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '4.1_introduction_BIM';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        QUIZ.initQuizPage(container, quizId);
+
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const quizId = '1.2_handles_Manipulators';
+    const container = document.getElementById('quiz-container');
+
+    if(container){
+        QUIZ.initQuizPage(container, quizId);
+
+        FORUM.render(quizId);
+        const forumInput = document.getElementById('forum-input');
+        const forumSubmit = document.getElementById('forum-submit');
+        if(forumSubmit && forumInput){
+            forumSubmit.addEventListener('click', () => {
+                FORUM.post(quizId, forumInput.value);
+                forumInput.value = '';
+            });
+        }
+    }
+});
+
+
+
 const quiz2_1 = [
     { question: "Topological surfaces include?", options: ["Torus, Möbius Strip", "Circle", "Square", "Triangle"], answer: 0, weight: 1 },
     { question: "Non-standard geometries are?", options: ["Complex surfaces", "Flat shapes", "Linear forms", "Simple blocks"], answer: 0, weight: 1 },
