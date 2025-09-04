@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>4.1 — Introduction to BIM</title>
-  <link rel="stylesheet" href="../css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.1 Introduction to BIM</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="4.1">
-  <div class="topbar"></div>
-  <div class="container main-wrapper" style="gap:18px">
-    <aside class="sidebar"></aside>
+<body>
 
-    <main class="content">
-      <div class="card">
-        <h1>Introduction to Building Information Modeling (BIM)</h1>
-        <p class="lead">Processes, coordination, and clash detection in BIM workflows.</p>
+<div class="topnav"></div>
+<div class="main-wrapper">
+  <div class="sidebar"></div>
+  <div class="content">
+    <h1>Introduction to BIM</h1>
 
-        <div class="progress-row" style="margin-top:8px">
-          <div class="linear progress-line-wrapper"><div class="progress-fill"></div></div>
-          <div class="circular circular-progress"><svg width="92" height="92" viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"></circle><circle class="progress" cx="50" cy="50" r="42"></circle></svg><div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div></div>
-          <div class="stepped-progress" style="flex:0 0 240px"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
-          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);"><div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div></div>
-        </div>
+    <!-- Progress bars -->
+    <div class="progress-line-wrapper">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="stepped-progress">
+      <div class="step"></div>
+      <div class="step"></div>
+      <div class="step"></div>
+      <div class="step"></div>
+    </div>
+    <div class="circular-progress">
+      <svg width="80" height="80">
+        <circle class="bg" r="45" cx="40" cy="40"></circle>
+        <circle class="progress" r="45" cx="40" cy="40"></circle>
+      </svg>
+    </div>
 
-        <hr style="opacity:.06;margin:12px 0">
+    <div id="quiz-container"></div>
 
-        <section id="forum-section">
-          <h3>Forum</h3>
-          <div id="4.1-forum-messages" class="messages"></div>
-          <textarea id="4.1-forum-input" placeholder="Share BIM resources..." style="width:100%;min-height:100px;margin-top:8px"></textarea>
-          <div style="margin-top:8px"><button id="4.1-forum-post" class="btn">Post</button></div>
-        </section>
-
-        <section id="quiz-section" style="margin-top:12px">
-          <h3>Quiz — Introduction to BIM (15 questions · 15%)</h3>
-          <div id="4.1-container" class="quiz-container"></div>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
-            <button class="submitAttempt btn">Submit Attempt</button>
-            <div style="margin-left:auto"><strong>Attempts:</strong> <span class="attemptBadge">0/3</span></div>
-          </div>
-        </section>
-      </div>
-    </main>
+    <!-- Forum -->
+    <div class="forum-container">
+      <h3>Discussion Forum</h3>
+      <div id="4.1_introduction_BIM-forum-messages"></div>
+      <input type="text" id="forum-input" placeholder="Type a message...">
+      <button id="forum-submit">Post</button>
+    </div>
   </div>
+</div>
 
-  <script src="../js/auth.js"></script>
-  <script src="../js/progress.js"></script>
-  <script src="../js/forum.js"></script>
-  <script src="../js/quiz.js"></script>
-  <script src="../js/4.1_introduction_BIM.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!AUTH.getSession()) return location.href = '../index.html';
-      AUTH.renderChrome('4.1');
+<script src="js/auth.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/forum.js"></script>
+<script src="js/4.1_introduction_BIM.js"></script>
 
-      Quiz.initQuizPage(document.getElementById('4.1-container'), 'quiz4_1');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    AUTH.renderChrome();
 
-      document.getElementById('4.1-forum-post').addEventListener('click', () => {
-        const t = document.getElementById('4.1-forum-input').value;
-        FORUM.post('4.1', t);
-        document.getElementById('4.1-forum-input').value = '';
-      });
+    const quizContainer = document.getElementById('quiz-container');
+    if (quizContainer) {
+        QUIZ.initQuizPage(quizContainer, 'quiz4_1');
+        FORUM.render('4.1_introduction_BIM');
+    }
 
-      document.querySelectorAll('.submitAttempt').forEach(b => b.addEventListener('click', () => {
-        Quiz.submit('quiz4_1', '4.1-container', AUTH.getSession().username);
-      }));
+    const forumInput = document.getElementById('forum-input');
+    const forumSubmit = document.getElementById('forum-submit');
+    forumSubmit.addEventListener('click', () => {
+        FORUM.post('4.1_introduction_BIM', forumInput.value);
+        forumInput.value = '';
     });
-  </script>
+});
+</script>
 </body>
 </html>
