@@ -6,22 +6,43 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <!-- Top Navigation -->
     <div class="topnav">
-        <h1>Unit 0 - Course Introduction</h1>
-        <a href="../index.html">Logout</a>
+        <div class="menu-left">
+            <h1>Computational Design LMS</h1>
+        </div>
+        <div class="menu-right">
+            <a href="../index.html">Logout</a>
+            <a href="0_quiz_0.html">Unit 0</a>
+            <a href="../Unit-1.1.1_introduction_Computational_Design/1.1.1_introduction_Computational_Design.html">Unit 1.1.1</a>
+            <a href="../Unit-1.2_handles_Manipulators/1.2_handles_Manipulators.html">Unit 1.2</a>
+            <a href="../Unit-2.1_contemporary_Geometries/2.1_contemporary_Geometries.html">Unit 2.1</a>
+            <a href="../Unit-3.1_digital_fabrication/3.1_digital_fabrication.html">Unit 3.1</a>
+            <a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">Unit 4.1</a>
+        </div>
     </div>
 
+    <!-- Main Wrapper -->
     <div class="main-wrapper">
+        <!-- Sidebar -->
         <div class="sidebar">
             <h2>Navigation</h2>
             <ul>
                 <li><a href="0_quiz_0.html">Unit 0 Quiz</a></li>
+                <li><a href="../Unit-1.1.1_introduction_Computational_Design/1.1.1_introduction_Computational_Design.html">Unit 1.1.1 Quiz</a></li>
+                <li><a href="../Unit-1.2_handles_Manipulators/1.2_handles_Manipulators.html">Unit 1.2 Quiz</a></li>
+                <li><a href="../Unit-2.1_contemporary_Geometries/2.1_contemporary_Geometries.html">Unit 2.1 Quiz</a></li>
+                <li><a href="../Unit-3.1_digital_fabrication/3.1_digital_fabrication.html">Unit 3.1 Quiz</a></li>
+                <li><a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">Unit 4.1 Quiz</a></li>
             </ul>
         </div>
 
+        <!-- Content -->
         <div class="content">
+            <!-- Quiz -->
             <div id="quiz-container"></div>
 
+            <!-- Forum -->
             <div class="forum-container">
                 <h3>Forum</h3>
                 <div id="0_quiz_0-forum-messages"></div>
@@ -29,20 +50,34 @@
                 <button id="forum-submit">Post</button>
             </div>
 
+            <!-- Progress Bars -->
             <div class="progress-container">
+                <!-- Linear -->
                 <div class="progress-line-wrapper">
                     <div class="progress-fill">0%</div>
                 </div>
 
+                <!-- Circular -->
                 <div class="circular-progress">
                     <svg width="80" height="80">
-                        <circle class="bg" cx="40" cy="40" r="45"></circle>
-                        <circle class="progress" cx="40" cy="40" r="45"></circle>
+                        <circle class="bg" cx="40" cy="40" r="36"></circle>
+                        <circle class="progress" cx="40" cy="40" r="36"></circle>
                     </svg>
                     <div class="progress-text">0%</div>
                 </div>
 
+                <!-- Stepped -->
                 <div class="stepped-progress">
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
                     <div class="step"></div>
                     <div class="step"></div>
                     <div class="step"></div>
@@ -52,10 +87,37 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="../js/auth.js"></script>
     <script src="../js/progress.js"></script>
     <script src="../js/forum.js"></script>
     <script src="../js/quiz.js"></script>
     <script src="../js/0_quiz_0.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = AUTH.getSession();
+            if(!session) {
+                alert('Please login first!');
+                window.location.href = '../index.html';
+                return;
+            }
+
+            const quizId = '0_quiz_0';
+            const container = document.getElementById('quiz-container');
+
+            if(container){
+                QUIZ.initQuizPage(container, quizId, true); // enable live feedback
+
+                // Forum
+                const forumInput = document.getElementById('forum-input');
+                const forumSubmit = document.getElementById('forum-submit');
+                forumSubmit.addEventListener('click', () => {
+                    FORUM.post(quizId, forumInput.value);
+                    forumInput.value = '';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
