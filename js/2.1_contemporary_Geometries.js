@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const quizId = '4.1_introduction_BIM';
+    const quizId = '2.1_introduction_BIM';
     const container = document.getElementById('quiz-container');
 
     if(container){
