@@ -1,72 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.1.1 Introduction to Computational Design</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>1.1.1 - Introduction to Computational Design</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
-<div class="topnav"></div>
-<div class="main-wrapper">
-  <div class="sidebar"></div>
-  <div class="content">
-    <h1>Introduction to Computational Design</h1>
-
-    <!-- Progress bars -->
-    <div class="progress-line-wrapper">
-      <div class="progress-fill"></div>
-    </div>
-    <div class="stepped-progress">
-      <div class="step"></div>
-      <div class="step"></div>
-      <div class="step"></div>
-      <div class="step"></div>
-    </div>
-    <div class="circular-progress">
-      <svg width="80" height="80">
-        <circle class="bg" r="45" cx="40" cy="40"></circle>
-        <circle class="progress" r="45" cx="40" cy="40"></circle>
-      </svg>
+    <div class="topnav">
+        <h1>Introduction to Computational Design</h1>
+        <a href="../index.html">Logout</a>
     </div>
 
-    <div id="quiz-container"></div>
+    <div class="main-wrapper">
+        <div class="sidebar">
+            <h2>Navigation</h2>
+            <ul>
+                <li><a href="1.1.1_introduction_Computational_Design.html">Quiz</a></li>
+            </ul>
+        </div>
 
-    <!-- Forum -->
-    <div class="forum-container">
-      <h3>Discussion Forum</h3>
-      <div id="1.1.1_introduction_Computational_Design-forum-messages"></div>
-      <input type="text" id="forum-input" placeholder="Type a message...">
-      <button id="forum-submit">Post</button>
+        <div class="content">
+            <div id="quiz-container"></div>
+
+            <div class="forum-container">
+                <h3>Forum</h3>
+                <div id="1.1.1_introduction_Computational_Design-forum-messages"></div>
+                <input type="text" id="forum-input" placeholder="Write a comment...">
+                <button id="forum-submit">Post</button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-line-wrapper">
+                    <div class="progress-fill">0%</div>
+                </div>
+
+                <div class="circular-progress">
+                    <svg width="80" height="80">
+                        <circle class="bg" cx="40" cy="40" r="45"></circle>
+                        <circle class="progress" cx="40" cy="40" r="45"></circle>
+                    </svg>
+                    <div class="progress-text">0%</div>
+                </div>
+
+                <div class="stepped-progress">
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                    <div class="step"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- Scripts -->
-<script src="js/auth.js"></script>
-<script src="js/progress.js"></script>
-<script src="js/quiz.js"></script>
-<script src="js/forum.js"></script>
-<script src="js/1.1.1_introduction_Computational_Design.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome();
-
-    const quizContainer = document.getElementById('quiz-container');
-    if (quizContainer) {
-        QUIZ.initQuizPage(quizContainer, 'quiz1_1_1');
-        FORUM.render('1.1.1_introduction_Computational_Design');
-    }
-
-    const forumInput = document.getElementById('forum-input');
-    const forumSubmit = document.getElementById('forum-submit');
-    forumSubmit.addEventListener('click', () => {
-        FORUM.post('1.1.1_introduction_Computational_Design', forumInput.value);
-        forumInput.value = '';
-    });
-});
-</script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/forum.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/1.1.1_introduction_Computational_Design.js"></script>
 </body>
 </html>
