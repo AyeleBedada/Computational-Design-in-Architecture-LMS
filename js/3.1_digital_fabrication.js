@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('quiz-container');
 
     if(container){
-        QUIZ.initQuizPage(container, quizId);
-
+        Quiz.initQuizPage(container, quizId);
         FORUM.render(quizId);
+
         const forumInput = document.getElementById('forum-input');
         const forumSubmit = document.getElementById('forum-submit');
         if(forumSubmit && forumInput){
@@ -16,9 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-
-
 
 const quiz3_1 = [
     { question: "Digital fabrication includes?", options: ["3D printing, CNC", "Painting", "Cooking", "Sculpting"], answer: 0, weight: 1 },
@@ -37,4 +34,4 @@ const quiz3_1 = [
     { question: "Quiz total points?", options: ["14", "15", "10", "12"], answer: 0, weight: 1 }
 ];
 
-localStorage.setItem('quiz3_1', JSON.stringify(quiz3_1));
+localStorage.setItem('3.1_digital_fabrication', JSON.stringify(quiz3_1));

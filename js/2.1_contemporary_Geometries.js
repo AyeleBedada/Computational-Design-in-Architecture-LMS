@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const quizId = '2.1_introduction_BIM';
+    const quizId = '2.1_contemporary_Geometries';
     const container = document.getElementById('quiz-container');
 
     if(container){
-        QUIZ.initQuizPage(container, quizId);
-
+        Quiz.initQuizPage(container, quizId);
         FORUM.render(quizId);
+
         const forumInput = document.getElementById('forum-input');
         const forumSubmit = document.getElementById('forum-submit');
         if(forumSubmit && forumInput){
@@ -16,29 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const quizId = '1.2_handles_Manipulators';
-    const container = document.getElementById('quiz-container');
-
-    if(container){
-        QUIZ.initQuizPage(container, quizId);
-
-        FORUM.render(quizId);
-        const forumInput = document.getElementById('forum-input');
-        const forumSubmit = document.getElementById('forum-submit');
-        if(forumSubmit && forumInput){
-            forumSubmit.addEventListener('click', () => {
-                FORUM.post(quizId, forumInput.value);
-                forumInput.value = '';
-            });
-        }
-    }
-});
-
-
 
 const quiz2_1 = [
     { question: "Topological surfaces include?", options: ["Torus, Möbius Strip", "Circle", "Square", "Triangle"], answer: 0, weight: 1 },
@@ -57,4 +34,4 @@ const quiz2_1 = [
     { question: "Quiz points count?", options: ["14", "10", "15", "12"], answer: 0, weight: 1 }
 ];
 
-localStorage.setItem('quiz2_1', JSON.stringify(quiz2_1));
+localStorage.setItem('2.1_contemporary_Geometries', JSON.stringify(quiz2_1));

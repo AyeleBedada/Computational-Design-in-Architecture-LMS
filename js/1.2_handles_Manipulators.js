@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('quiz-container');
 
     if(container){
-        QUIZ.initQuizPage(container, quizId);
-
+        Quiz.initQuizPage(container, quizId);
         FORUM.render(quizId);
+
         const forumInput = document.getElementById('forum-input');
         const forumSubmit = document.getElementById('forum-submit');
         if(forumSubmit && forumInput){
@@ -17,12 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-
 const quiz1_2 = [
     { question: "Handles and manipulators help in?", options: ["3D modeling", "Painting", "Writing Essays", "Photography"], answer: 0, weight: 1 },
     { question: "Manipulators allow?", options: ["Scaling, rotating, moving", "Printing", "Cooking", "Running simulations"], answer: 0, weight: 1 },
-    { question: "Weight of quiz?", options: ["14%", "10%", "15%", "20%"], answer: 0, weight: 1 },
+    { question: "Quiz weight?", options: ["14%", "10%", "15%", "20%"], answer: 0, weight: 1 },
     { question: "Forum is used for?", options: ["Discussion", "Archiving", "Downloading", "Watching videos"], answer: 0, weight: 1 },
     { question: "Quiz shows live feedback?", options: ["Yes", "No"], answer: 0, weight: 1 },
     { question: "LocalStorage saves?", options: ["Password, Forum, Progress", "Videos", "PDF", "Emails"], answer: 0, weight: 1 },
@@ -36,4 +34,4 @@ const quiz1_2 = [
     { question: "Quiz total points count?", options: ["14", "10", "15", "12"], answer: 0, weight: 1 }
 ];
 
-localStorage.setItem('quiz1_2', JSON.stringify(quiz1_2));
+localStorage.setItem('1.2_handles_Manipulators', JSON.stringify(quiz1_2));

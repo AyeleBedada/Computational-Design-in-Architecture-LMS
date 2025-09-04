@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('quiz-container');
 
     if(container){
-        QUIZ.initQuizPage(container, quizId);
-
+        Quiz.initQuizPage(container, quizId);
         FORUM.render(quizId);
+
         const forumInput = document.getElementById('forum-input');
         const forumSubmit = document.getElementById('forum-submit');
         if(forumSubmit && forumInput){
@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-
 
 const quiz4_1 = [
     { question: "BIM stands for?", options: ["Building Information Modeling", "Basic Information Management", "Building Industrial Model", "Binary Information Model"], answer: 0, weight: 1 },
@@ -37,4 +35,4 @@ const quiz4_1 = [
     { question: "Global score tracked via?", options: ["UIProgress", "Forum", "Quiz.js", "auth.js"], answer: 0, weight: 1 }
 ];
 
-localStorage.setItem('quiz4_1', JSON.stringify(quiz4_1));
+localStorage.setItem('4.1_introduction_BIM', JSON.stringify(quiz4_1));
