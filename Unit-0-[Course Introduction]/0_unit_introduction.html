@@ -1,16 +1,19 @@
-<!-- /complete.html -->
+<!-- /Unit-0-[Course Introduction]/0_unit_introduction.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Congratulations — Course Completed!</title>
+  <title>Unit 0 — Introduction: Objectives & Lesson Plan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="../css_fallback.css" onerror="this.remove()"><!-- graceful -->
+  <link rel="stylesheet" href="../css/../css/style.css" />
+  <!-- Firebase / EmailJS -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="config/firebase-config.js" defer></script>
-  <script src="js/auth.js" defer></script>
-  <script src="js/progress.js" defer></script>
+  <script src="../config/firebase-config.js" defer></script>
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/progress.js" defer></script>
+  <script src="../js/forum.js" defer></script>
 
 <script>
   function requireSession() {
@@ -92,34 +95,66 @@
   <div class="page-wrap">
     <aside id="sidebar"></aside>
     <main class="content">
-      <h1>🎉 Congratulations!</h1>
-      <p>You’ve reached the end of the course. Your final progress and quiz performance have been recorded.</p>
+      <h1>Unit 0 — Course Introduction</h1>
+      <h3>Learning Objectives</h3>
+      <ul>
+        <li>Understand the scope and structure of the course</li>
+        <li>Identify expected outcomes and assessment methods</li>
+        <li>Familiarize with LMS navigation, forums, and quizzes</li>
+      </ul>
+      <h3>Lesson Plan (4 hours)</h3>
+      <ol>
+        <li>Class activities & expectations</li>
+        <li>Lecture with Q&A</li>
+        <li>Break & attendance</li>
+        <li>Studio exercise implementation & evaluation (with two breaks)</li>
+      </ol>
 
-      <section class="card center">
-        <div class="circle-wrap big">
-          <svg width="220" height="220">
-            <circle cx="110" cy="110" r="95" stroke="#e5e7eb" stroke-width="18" fill="none"></circle>
-            <circle id="progressCircle" cx="110" cy="110" r="95" stroke="#16a34a" stroke-width="18" fill="none"
-                    stroke-linecap="round" stroke-dasharray="596" stroke-dashoffset="596"></circle>
+      <!-- Progress -->
+      <section class="progress-grid">
+        <div>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          <div class="progress-label">Overall Progress</div>
+        </div>
+        <div class="circle-wrap">
+          <svg width="160" height="160">
+            <circle cx="80" cy="80" r="70" stroke="#e5e7eb" stroke-width="14" fill="none"></circle>
+            <circle id="progressCircle" cx="80" cy="80" r="70" stroke="#2563eb" stroke-width="14" fill="none"
+              stroke-linecap="round" stroke-dasharray="440" stroke-dashoffset="440"></circle>
           </svg>
-          <div class="circle-label">Overall Completion</div>
+          <div class="circle-label">Completion</div>
         </div>
-        <div class="progress-track">
-          <div id="progressBar" class="progress-bar"></div>
+        <div class="stepper">
+          <div class="step">Welcome</div>
+          <div class="step">Unit 0</div>
+          <div class="step">Unit 1</div>
+          <div class="step">Unit 2</div>
+          <div class="step">Unit 3</div>
+          <div class="step">Unit 4</div>
+          <div class="step">Final</div>
         </div>
-        <div class="progress-label">Linear Progress</div>
       </section>
 
-      <p>Before you go, please complete the brief post-course assessment:</p>
-      <p><a class="btn" href="post_course_assessment.html">Post-course Assessment</a></p>
+      <!-- Forum -->
+      <section class="card">
+        <h3>Unit 0 — Discussion</h3>
+        <div id="forumContainer"></div>
+        <div class="forum-compose">
+          <textarea id="forumMessage" placeholder="Share thoughts or questions for Unit 0..."></textarea>
+          <button class="btn" onclick="postMessage('0_unit_introduction')">Post</button>
+        </div>
+      </section>
     </main>
   </div>
 
   <script>
-    renderChrome('complete.html');
+    // Path fix helpers for nested folder
+    function fixHref(h){ return h.replace('../',''); }
+    renderChrome(fixHref('Unit-0-[Course Introduction]/0_unit_introduction.html'));
     enforceStudentProtection();
-    markPageComplete('complete');
+    markPageComplete('0_unit_introduction');
     renderProgress();
+    loadForum('0_unit_introduction');
   </script>
 </body>
 </html>

@@ -2,22 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>4.1 Introduction to BIM</title>
+  <title>Mid Exam – Part 2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../css/style.css" />
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="../config/firebase-config.js"></script>
-  <!-- Shared -->
+  <!-- Shared JS -->
   <script src="../js/auth.js"></script>
   <script src="../js/progress.js"></script>
   <script src="../js/forum.js"></script>
   <script src="../js/admin.js"></script>
-  <script src="../js/quiz.js"></script>
-  <!-- Page Quiz -->
-  <script src="../js/4.1_introduction_BIM.js" defer></script>
-
 
 <script>
   function requireSession() {
@@ -93,25 +89,24 @@
 
 
 
-
 </head>
 <body onload="
   initAuthGate();
   updateProgressUI();
-  loadForum('4.1_introduction_BIM');
+  loadForum('mid_exam_part2');
   applyAcademicProtection();
-  markPageVisited('4.1_introduction_BIM');
-  checkQuizAvailability('4.1_introduction_BIM','quizLock','quizSection');
+  markPageVisited('Mid-Exam Part 2');
+  checkQuizAvailability('mid_exam_part2','examLockBanner','examContent');
 ">
   <header class="topbar">
     <div class="brand">Computational Design LMS</div>
     <nav class="menu">
       <a href="../index.html">Home</a>
       <a href="../00_navigation_tutorial.html">Navigation</a>
-      <a href="../Unit-3-[Digital and analog fabrication Techniques]/3.2_traditional_digital.html">Unit 3</a>
-      <a class="active" href="./4.1_introduction_BIM.html">Unit 4</a>
-      <a href="./4.2_implementation_BIM.html">BIM Implementation</a>
-      <a href="../Mid-Exam/mid_exam_part1.html">Mid Exam</a>
+      <a href="../Unit-2-[Topological Design Process and Form Finding]/2.1_contemporary_Geometries.html">Unit 2</a>
+      <a href="../Unit-3-[Digital and analog fabrication Techniques]/3.1_digital_fabrication.html">Unit 3</a>
+      <a href="../Unit-4-[Building Iniformation Modeling (BIM)]/4.1_introduction_BIM.html">Unit 4</a>
+      <a class="active" href="./mid_exam_part2.html">Mid Exam</a>
       <a href="../Final-Exam-[Group Work]/final_exam_part1.html">Final Exam</a>
       <a id="adminLink" href="../admin.html" style="display:none">Admin</a>
       <button id="logoutBtn" class="btn-quiet" onclick="logout()" style="display:none">Logout</button>
@@ -119,66 +114,52 @@
   </header>
 
   <aside class="sidebar">
-    <h3>Unit 4 – BIM</h3>
+    <h3>Mid Exam</h3>
     <ul>
-      <li><a class="active" href="./4.1_introduction_BIM.html">4.1 Intro to BIM</a></li>
-      <li><a href="./4.2_implementation_BIM.html">4.2 Implementation</a></li>
+      <li><a href="./mid_exam_part1.html">Part 1</a></li>
+      <li><a class="active" href="./mid_exam_part2.html">Part 2</a></li>
     </ul>
     <hr />
     <div class="progress-widgets">
       <div class="progress-bar"><div id="progressBar"></div></div>
-      <div id="circularProgress" class="progress-circle"></div>
-      <div id="stepProgress" class="progress-steps"></div>
+      <div class="progress-circle" id="circularProgress"></div>
+      <div class="progress-steps" id="stepProgress"></div>
     </div>
   </aside>
 
   <main class="content">
-    <h1>4.1 Introduction to BIM</h1>
-    <p class="lead">Core concepts of Building Information Modeling, collaboration, LOD, and coordination workflows.</p>
+    <h1>Mid Exam – Part 2</h1>
+    <p class="lead">Applied questions and short analyses. Complete Part 1 first.</p>
 
-    <article class="card">
-      <h2>Lesson Plan & Objectives (4 hours)</h2>
-      <ul>
-        <li>Intro & scope</li>
-        <li>Lecture: BIM fundamentals & standards</li>
-        <li>Break</li>
-        <li>Studio: small BIM coordination exercise</li>
-        <li>Reflection & attendance</li>
-      </ul>
-    </article>
-
-    <div id="quizLock" class="lock-banner" style="display:none">
-      <p>🚫 Quiz is currently locked by the administrator.</p>
+    <div id="examLockBanner" class="lock-banner" style="display:none">
+      <p>🚫 This part is currently locked by the administrator.</p>
     </div>
 
-    <section id="quizSection" class="card">
-      <h2>Quiz: Introduction to BIM</h2>
-      <div id="quizContainer"
-           data-quiz-id="4.1_introduction_BIM"
-           data-weight="7"
-           data-max-attempts="3"
-           data-questions="14">
-      </div>
-      <div class="quiz-actions">
-        <button class="btn" onclick="startQuiz('4.1_introduction_BIM')">Start / Continue</button>
-        <button class="btn primary" onclick="submitQuiz('4.1_introduction_BIM')">Submit</button>
-      </div>
-      <div id="liveFeedback" class="live-feedback"></div>
+    <section id="examContent">
+      <article class="card">
+        <h2>Scenario-based Questions</h2>
+        <ol class="exam-list">
+          <li>Given a studio brief, outline a parametric strategy using constraints and drivers.</li>
+          <li>Propose a data pipeline for gathering site data and feeding it into a design script.</li>
+          <li>Evaluate pros/cons of a visual programming tool vs. code for this brief.</li>
+          <li>Sketch (describe) a topology optimization approach for a canopy design.</li>
+          <li>Define milestones/checks for a 2-week sprint on the project.</li>
+        </ol>
+        <div class="exam-actions">
+          <button class="btn" onclick="saveExamDraft('mid_exam_part2')">Save Draft</button>
+          <button class="btn primary" onclick="submitExam('mid_exam_part2')">Submit Part 2</button>
+        </div>
+      </article>
     </section>
 
     <section class="card">
       <h2>Discussion Forum</h2>
       <div id="forumContainer"></div>
       <div class="forum-editor">
-        <textarea id="forumMessage" rows="4" placeholder="Share BIM insights…"></textarea>
-        <button class="btn" onclick="postMessage('4.1_introduction_BIM')">Post</button>
+        <textarea id="forumMessage" rows="4" placeholder="Discuss after submitting…"></textarea>
+        <button class="btn" onclick="postMessage('mid_exam_part2')">Post</button>
       </div>
     </section>
-
-    <nav class="pager">
-      <a class="btn" href="../Unit-3-[Digital and analog fabrication Techniques]/3.2_traditional_digital.html">← Previous</a>
-      <a class="btn" href="./4.2_implementation_BIM.html">Next →</a>
-    </nav>
   </main>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>4.1 Introduction to BIM</title>
+  <title>3.2 Traditional Manufacturing through the Lens of Digital</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../css/style.css" />
   <!-- Firebase -->
@@ -16,7 +16,7 @@
   <script src="../js/admin.js"></script>
   <script src="../js/quiz.js"></script>
   <!-- Page Quiz -->
-  <script src="../js/4.1_introduction_BIM.js" defer></script>
+  <script src="../js/3.2_traditional_digital.js" defer></script>
 
 
 <script>
@@ -93,24 +93,23 @@
 
 
 
-
 </head>
 <body onload="
   initAuthGate();
   updateProgressUI();
-  loadForum('4.1_introduction_BIM');
+  loadForum('3.2_traditional_digital');
   applyAcademicProtection();
-  markPageVisited('4.1_introduction_BIM');
-  checkQuizAvailability('4.1_introduction_BIM','quizLock','quizSection');
+  markPageVisited('3.2_traditional_digital');
+  checkQuizAvailability('3.2_traditional_digital','quizLock','quizSection');
 ">
   <header class="topbar">
     <div class="brand">Computational Design LMS</div>
     <nav class="menu">
       <a href="../index.html">Home</a>
       <a href="../00_navigation_tutorial.html">Navigation</a>
-      <a href="../Unit-3-[Digital and analog fabrication Techniques]/3.2_traditional_digital.html">Unit 3</a>
-      <a class="active" href="./4.1_introduction_BIM.html">Unit 4</a>
-      <a href="./4.2_implementation_BIM.html">BIM Implementation</a>
+      <a href="../Unit-2-[Topological Design Process and Form Finding]/2.2_Topological_Form_Finding.html">Unit 2</a>
+      <a class="active" href="./3.2_traditional_digital.html">Unit 3</a>
+      <a href="../Unit-4-[Building Iniformation Modeling (BIM)]/4.1_introduction_BIM.html">Unit 4</a>
       <a href="../Mid-Exam/mid_exam_part1.html">Mid Exam</a>
       <a href="../Final-Exam-[Group Work]/final_exam_part1.html">Final Exam</a>
       <a id="adminLink" href="../admin.html" style="display:none">Admin</a>
@@ -119,10 +118,10 @@
   </header>
 
   <aside class="sidebar">
-    <h3>Unit 4 – BIM</h3>
+    <h3>Unit 3 – Digital & Analog Fabrication</h3>
     <ul>
-      <li><a class="active" href="./4.1_introduction_BIM.html">4.1 Intro to BIM</a></li>
-      <li><a href="./4.2_implementation_BIM.html">4.2 Implementation</a></li>
+      <li><a href="./3.1_digital_fabrication.html">3.1 Digital Fabrication</a></li>
+      <li><a class="active" href="./3.2_traditional_digital.html">3.2 Traditional ↔ Digital</a></li>
     </ul>
     <hr />
     <div class="progress-widgets">
@@ -133,16 +132,16 @@
   </aside>
 
   <main class="content">
-    <h1>4.1 Introduction to BIM</h1>
-    <p class="lead">Core concepts of Building Information Modeling, collaboration, LOD, and coordination workflows.</p>
+    <h1>3.2 Traditional Manufacturing through the Lens of Digital</h1>
+    <p class="lead">Bridging handcraft and digital pipelines; tolerances, jigs, fixtures, and production strategies.</p>
 
     <article class="card">
       <h2>Lesson Plan & Objectives (4 hours)</h2>
       <ul>
-        <li>Intro & scope</li>
-        <li>Lecture: BIM fundamentals & standards</li>
+        <li>Intro & examples</li>
+        <li>Lecture: hybrid workflows</li>
         <li>Break</li>
-        <li>Studio: small BIM coordination exercise</li>
+        <li>Studio: make a jig / document tolerances</li>
         <li>Reflection & attendance</li>
       </ul>
     </article>
@@ -152,16 +151,16 @@
     </div>
 
     <section id="quizSection" class="card">
-      <h2>Quiz: Introduction to BIM</h2>
+      <h2>Quiz: Traditional ↔ Digital</h2>
       <div id="quizContainer"
-           data-quiz-id="4.1_introduction_BIM"
+           data-quiz-id="3.2_traditional_digital"
            data-weight="7"
            data-max-attempts="3"
            data-questions="14">
       </div>
       <div class="quiz-actions">
-        <button class="btn" onclick="startQuiz('4.1_introduction_BIM')">Start / Continue</button>
-        <button class="btn primary" onclick="submitQuiz('4.1_introduction_BIM')">Submit</button>
+        <button class="btn" onclick="startQuiz('3.2_traditional_digital')">Start / Continue</button>
+        <button class="btn primary" onclick="submitQuiz('3.2_traditional_digital')">Submit</button>
       </div>
       <div id="liveFeedback" class="live-feedback"></div>
     </section>
@@ -170,14 +169,14 @@
       <h2>Discussion Forum</h2>
       <div id="forumContainer"></div>
       <div class="forum-editor">
-        <textarea id="forumMessage" rows="4" placeholder="Share BIM insights…"></textarea>
-        <button class="btn" onclick="postMessage('4.1_introduction_BIM')">Post</button>
+        <textarea id="forumMessage" rows="4" placeholder="Share hybrid fabrication insights…"></textarea>
+        <button class="btn" onclick="postMessage('3.2_traditional_digital')">Post</button>
       </div>
     </section>
 
     <nav class="pager">
-      <a class="btn" href="../Unit-3-[Digital and analog fabrication Techniques]/3.2_traditional_digital.html">← Previous</a>
-      <a class="btn" href="./4.2_implementation_BIM.html">Next →</a>
+      <a class="btn" href="./3.1_digital_fabrication.html">← Previous</a>
+      <a class="btn" href="../Unit-4-[Building Iniformation Modeling (BIM)]/4.1_introduction_BIM.html">Next →</a>
     </nav>
   </main>
 </body>

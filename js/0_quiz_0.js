@@ -1,19 +1,17 @@
-/* js/0_quiz_0.js
-   Defines QUESTIONS for Unit 0 quiz (14 questions, weight 14)
-*/
-window.QUESTIONS = [
-  { q: "What is the main aim of this course?", options: ["Practice geometry", "Understand computational design workflows","Learn painting","Learn carpentry"], ans: 1 },
-  { q: "Which tool is commonly used for parametric modeling?", options: ["Excel", "Grasshopper", "Word", "Photoshop"], ans: 1 },
-  { q: "Computational Design emphasizes:", options: ["Mass production", "Algorithmic thinking", "Only hand-drawing", "None"], ans: 1 },
-  { q: "Topological design focuses on:", options: ["Color theory", "Surfaces and connectivity", "Sound", "Textures"], ans: 1 },
-  { q: "Digital fabrication is primarily about:", options: ["3D printing and CNC", "Painting", "Sculpture only", "None"], ans: 0 },
-  { q: "A learning objective is:", options: ["A grade", "A goal for learning", "A project", "A test"], ans: 1 },
-  { q: "A lesson plan should include:", options: ["Breaks", "Only lecture", "No time", "Only homework"], ans: 0 },
-  { q: "Local persistence across devices is via:", options: ["Cookies", "Firestore", "Flash", "PDF"], ans: 1 },
-  { q: "Email verification is implemented with:", options: ["SMTP server on server", "EmailJS", "Faxes", "Slack"], ans: 1 },
-  { q: "Quizzes have how many attempts (default):", options: ["1", "3", "5", "Unlimited"], ans: 1 },
-  { q: "Admin can:", options: ["Close quizzes","Only view","Sign up students","Do nothing"], ans: 0 },
-  { q: "Forum posts are stored:", options: ["Local only", "In Firestore", "In cookies", "In plain text files"], ans: 1 },
-  { q: "Global progress equals:", options: ["100 always","Sum of page bonuses & quiz contributions","Number of logins","Quiz count"], ans: 1 },
-  { q: "Certificate generation uses:", options: ["jsPDF","PHP","Node","Ruby"], ans: 0 }
+// js/0_quiz_0.js
+const quiz_0_questions = [
+  { question: "What is the main objective of Unit 0?", options: ["To introduce computational tools", "To provide syllabus, rubrics, and pre-assessment", "To teach fabrication", "To assign teams"], answer: 1 },
+  { question: "Which item is NOT typically part of Unit 0?", options: ["Syllabus", "Rubrics", "Pre-assessment", "Robotics programming"], answer: 3 },
+  { question: "The pre-assessment aims to:", options: ["Grade students", "Measure baseline knowledge", "Replace midterm", "Assign final project topics"], answer: 1 },
+  { question: "Who posts official announcements on the intro page?", options: ["Students", "Administrator", "Random visitors", "External guests"], answer: 1 },
+  { question: "What does a rubric provide?", options: ["Assessment criteria and levels", "Software tutorials", "Fabrication instructions", "Site surveys"], answer: 0 },
+  { question: "How many questions are in the Unit 0 quiz?", options: ["10", "12", "14", "16"], answer: 1 },
+  { question: "Unit 0 content helps students to:", options: ["Skip coursework", "Understand course structure and expectations", "Learn advanced scripting", "Build robots"], answer: 1 },
+  { question: "Where should students refer to find assignment deadlines?", options: ["Syllabus", "Forum posts only", "External websites only", "None of the above"], answer: 0 },
+  { question: "Pre-course assessment data is used to:", options: ["Lock quizzes", "Inform teaching pacing", "Auto-grade projects", "Delete accounts"], answer: 1 },
+  { question: "Which tool is used to collect pre-assessment responses (example)?", options: ["Google Forms", "Paper only", "Hand signals", "Whiteboard only"], answer: 0 },
+  { question: "Who may edit the published rubrics?", options: ["Administrator only", "All students automatically", "Any visitor", "No one"], answer: 0 },
+  { question: "What is the weight of this quiz toward the course total?", options: ["4%", "5%", "6%", "7%"], answer: 2 }
 ];
+
+registerQuiz("0_quiz_0", quiz_0_questions, 6);
