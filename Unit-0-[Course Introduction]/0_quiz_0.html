@@ -4,6 +4,35 @@
     <meta charset="UTF-8">
     <title>Unit 0 - Course Introduction</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Dropdown menu styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #78bb7b;
+            min-width: 200px;
+            z-index: 1000;
+            padding: 0;
+            margin: 0;
+            border-radius: 5px;
+        }
+        .dropdown-content a {
+            color: #000;
+            padding: 0.5rem 1rem;
+            display: block;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #2ea15a;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <div class="main-wrapper">
@@ -12,34 +41,40 @@
     <aside class="sidebar">
         <h2>Course Units</h2>
         <ul id="sidebar-menu">
-            <li>Unit 0
-                <ul>
+            <li class="dropdown">
+                <span>Unit 0</span>
+                <ul class="dropdown-content">
                     <li><a href="0_quiz_0.html">Course Introduction Quiz</a></li>
                 </ul>
             </li>
-            <li>Unit 1
-                <ul>
-                    <li><a href="../Unit-1.1.1_introduction_Computational_Design/1.1.1_introduction_Computational_Design.html">Intro to Computational Design</a></li>
-                    <li><a href="../Unit-1.2_handles_Manipulators/1.2_handles_Manipulators.html">Handles & Manipulators</a></li>
+            <li class="dropdown">
+                <span>Unit 1</span>
+                <ul class="dropdown-content">
+                    <li><a href="../Unit-1.1.1_introduction_Computational_Design/1.1.1_introduction_Computational_Design.html">1.1.1 Introduction to Computational Design</a></li>
+                    <li><a href="../Unit-1.2_handles_Manipulators/1.2_handles_Manipulators.html">1.2 Handles & Manipulators</a></li>
                 </ul>
             </li>
-            <li>Unit 2
-                <ul>
-                    <li><a href="../Unit-2.1_contemporary_Geometries/2.1_contemporary_Geometries.html">Contemporary Geometries</a></li>
+            <li class="dropdown">
+                <span>Unit 2</span>
+                <ul class="dropdown-content">
+                    <li><a href="../Unit-2.1_contemporary_Geometries/2.1_contemporary_Geometries.html">2.1 Contemporary Geometries</a></li>
                 </ul>
             </li>
-            <li>Unit 3
-                <ul>
-                    <li><a href="../Unit-3.1_digital_fabrication/3.1_digital_fabrication.html">Digital Fabrication</a></li>
+            <li class="dropdown">
+                <span>Unit 3</span>
+                <ul class="dropdown-content">
+                    <li><a href="../Unit-3.1_digital_fabrication/3.1_digital_fabrication.html">3.1 Digital Fabrication</a></li>
                 </ul>
             </li>
-            <li>Unit 4
-                <ul>
-                    <li><a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">Introduction to BIM</a></li>
+            <li class="dropdown">
+                <span>Unit 4</span>
+                <ul class="dropdown-content">
+                    <li><a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">4.1 Introduction to BIM</a></li>
                 </ul>
             </li>
-            <li>Final Assessments
-                <ul>
+            <li class="dropdown">
+                <span>Final Assessments</span>
+                <ul class="dropdown-content">
                     <li><a href="../post_course_assessment.html">Post Course Assessment</a></li>
                     <li><a href="../complete.html">Course Completion</a></li>
                 </ul>
@@ -56,12 +91,27 @@
         <nav class="topnav">
             <span>Computational Design LMS</span>
             <div>
-                <a href="../index.html">Home</a>
+                <div class="dropdown">
+                    <a href="#">Units</a>
+                    <div class="dropdown-content">
+                        <a href="0_quiz_0.html">Unit 0 - Quiz</a>
+                        <a href="../Unit-1.1.1_introduction_Computational_Design/1.1.1_introduction_Computational_Design.html">Unit 1.1.1</a>
+                        <a href="../Unit-1.2_handles_Manipulators/1.2_handles_Manipulators.html">Unit 1.2</a>
+                        <a href="../Unit-2.1_contemporary_Geometries/2.1_contemporary_Geometries.html">Unit 2.1</a>
+                        <a href="../Unit-3.1_digital_fabrication/3.1_digital_fabrication.html">Unit 3.1</a>
+                        <a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">Unit 4.1</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Assessments</a>
+                    <div class="dropdown-content">
+                        <a href="../post_course_assessment.html">Post Course Assessment</a>
+                        <a href="../complete.html">Course Completion</a>
+                    </div>
+                </div>
                 <a href="../profile.html">Profile</a>
-                <a href="../post_course_assessment.html">Post Course Assessment</a>
-                <a href="../complete.html">Course Completion</a>
+                <a href="../index.html" id="logout-btn">Logout</a>
                 <a href="../admin.html" id="admin-top-link" style="display:none;">Admin</a>
-                <a href="../logout.html" id="logout-btn">Logout</a>
             </div>
         </nav>
 
@@ -93,7 +143,6 @@
             <div class="step"></div>
             <div class="step"></div>
         </div>
-
     </div>
 </div>
 
