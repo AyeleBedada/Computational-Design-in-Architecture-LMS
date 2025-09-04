@@ -63,6 +63,9 @@
 </style>
 </head>
 <body>
+
+
+
 <div class="main-wrapper">
 
 <!-- Sidebar -->
@@ -134,11 +137,31 @@
             <a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">4.1 Introduction to BIM</a>
         </div>
     </div>
+
     <a href="../post_course_assessment.html">Post Course Assessment</a>
     <a href="../complete.html">Course Completion</a>
     <a href="../admin.html" id="admin-top-link">Admin</a>
+    <a href="#" id="change-pass-btn">Change Password</a>
     <a href="../index.html" id="logout-btn">Logout</a>
 </nav>
+
+
+<div id="change-pass-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span id="close-pass-modal" class="close">&times;</span>
+        <h3>Change Password</h3>
+        <label for="old-pass">Old Password:</label>
+        <input type="password" id="old-pass" placeholder="Enter current password">
+        <label for="new-pass">New Password:</label>
+        <input type="password" id="new-pass" placeholder="Enter new password">
+        <label for="confirm-pass">Confirm New Password:</label>
+        <input type="password" id="confirm-pass" placeholder="Confirm new password">
+        <button id="submit-pass-change">Update Password</button>
+        <p id="pass-msg" style="color:red;"></p>
+    </div>
+</div>
+
+
 
 <h1>Unit 0 - Course Introduction</h1>
 <div id="quiz-container"></div>
@@ -217,6 +240,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const total = (JSON.parse(localStorage.getItem(quizId)) || []).length;
     UIProgress.updateAllProgress(savedScore, total);
 });
+
 </script>
+
+//change password
+
+<script> 
+document.addEventListener('DOMContentLoaded', () => {
+    const changeBtn = document.getElementById('change-pass-btn');
+    const modal = document.getElementById('change-pass-modal');
+    const closeBtn = document.getElementById('close-pass-modal');
+    const submitBtn = document.getElementById('submit-pass-change');
+    const msg = document.getElementById('pass-msg');
+
+    changeBtn.addEventListener('click', () => modal.style.display = 'block');
+    closeBtn.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+
+    submitBtn.addEventListener('click', () => {
+        const oldPass = document.getElementById('old-pass').value;
+        const newPass = document.getElementById('new-pass').value;
+        const confirmPass = document.getElementById('confirm-pass').value;
+
+        const session = AUTH.getSession();
+        if(!session) return alert("Not logged in");
+
+        const email = session.email;
+        const storedPw = localStorage.getItem(`pw_${email}`) || null;
+
+        if(oldPass !== storedPw && oldPass !== null) {
+            msg.textContent = "Old password is incorrect.";
+            return;
+        }
+        if(newPass !== confirmPass) {
+            msg.textContent = "New passwords do not match.";
+            return;
+        }
+        localStorage.setItem(`pw_${email}`, newPass);
+        msg.style.color = 'green';
+        msg.textContent = "Password successfully updated!";
+        setTimeout(() => modal.style.display = 'none', 1500);
+    });
+});
+
+</script>
+
+
+
+
 </body>
 </html>
