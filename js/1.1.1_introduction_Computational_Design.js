@@ -1,12 +1,11 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const quizId = '1.1.1_introduction_Computational_Design';
     const container = document.getElementById('quiz-container');
 
     if(container){
-        QUIZ.initQuizPage(container, quizId);
-
+        Quiz.initQuizPage(container, quizId);
         FORUM.render(quizId);
+
         const forumInput = document.getElementById('forum-input');
         const forumSubmit = document.getElementById('forum-submit');
         if(forumSubmit && forumInput){
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
 
 const quiz1_1_1 = [
     { question: "Computational design primarily uses?", options: ["Algorithms", "Manual Drafting", "Physical Models", "Paintings"], answer: 0, weight: 1 },
@@ -36,4 +34,4 @@ const quiz1_1_1 = [
     { question: "Which progress type is included?", options: ["Linear, Circular, Stepped, Animated", "Linear only", "Circular only", "None"], answer: 0, weight: 1 }
 ];
 
-localStorage.setItem('quiz1_1_1', JSON.stringify(quiz1_1_1));
+localStorage.setItem('1.1.1_introduction_Computational_Design', JSON.stringify(quiz1_1_1));

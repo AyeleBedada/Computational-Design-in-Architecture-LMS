@@ -1,49 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mid Exam Part 1</title>
-<link rel="stylesheet" href="../css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Final Exam — Part 1</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="final_exam_part1">
+  <div class="topbar"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar"></aside>
 
-<main>
-<h1>Mid Exam Part 1</h1>
-<p>This exam tests your knowledge up to this point.</p>
+    <main class="content">
+      <div class="card">
+        <h1>Final Exam — Part 1</h1>
+        <p class="lead">Final assessment and discussion forum.</p>
 
-<section id="forum-section">
-    <h2>Forum</h2>
-    <div id="mid_exam_part1-forum-messages"></div>
-    <textarea id="mid_exam_part1-forum-input" placeholder="Write your post here..."></textarea>
-    <button id="mid_exam_part1-forum-post">Post</button>
-</section>
+        <div class="progress-row" style="margin-top:8px">
+          <div class="linear progress-line-wrapper"><div class="progress-fill"></div></div>
+          <div class="circular circular-progress"><svg width="92" height="92" viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"></circle><circle class="progress" cx="50" cy="50" r="42"></circle></svg><div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div></div>
+          <div class="stepped-progress" style="flex:0 0 240px"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);"><div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div></div>
+        </div>
 
-<section id="quiz-section">
-    <h2>Mid Exam Quiz</h2>
-    <div class="quiz-container" id="mid_exam_part1-container"></div>
-    <button class="submitAttempt">Submit Quiz</button>
-</section>
+        <hr style="opacity:.06;margin:12px 0">
 
-</main>
+        <section id="forum-section">
+          <h3>Forum</h3>
+          <div id="final_exam_part1-forum-messages" class="messages"></div>
+          <textarea id="final_exam_part1-forum-input" placeholder="Questions about the exam..." style="width:100%;min-height:100px;margin-top:8px"></textarea>
+          <div style="margin-top:8px"><button id="final_exam_part1-forum-post" class="btn">Post</button></div>
+        </section>
 
-<script src="../js/auth.js"></script>
-<script src="../js/forum.js"></script>
-<script src="../js/quiz.js"></script>
-<script src="../js/progress.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome('mid_exam_part1');
-    Quiz.initQuizPage(document.getElementById('mid_exam_part1-container'), 'mid_exam_part1');
-    document.getElementById('mid_exam_part1-forum-post').addEventListener('click', () => {
-        const text = document.getElementById('mid_exam_part1-forum-input').value;
-        FORUM.post('mid_exam_part1', text);
-        document.getElementById('mid_exam_part1-forum-input').value = '';
+        <section id="quiz-section" style="margin-top:12px">
+          <h3>Final Exam Quiz</h3>
+          <div id="final_exam_part1-container" class="quiz-container"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+            <button class="submitAttempt btn">Submit Attempt</button>
+            <div style="margin-left:auto"><strong>Attempts:</strong> <span class="attemptBadge">0/3</span></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/forum.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = '../index.html';
+      AUTH.renderChrome('final_exam_part1');
+
+      Quiz.initQuizPage(document.getElementById('final_exam_part1-container'), 'quiz_final1');
+
+      document.getElementById('final_exam_part1-forum-post').addEventListener('click', () => {
+        const t = document.getElementById('final_exam_part1-forum-input').value;
+        FORUM.post('final_exam_part1', t);
+        document.getElementById('final_exam_part1-forum-input').value = '';
+      });
+
+      document.querySelectorAll('.submitAttempt').forEach(b => b.addEventListener('click', () => {
+        Quiz.submit('quiz_final1', 'final_exam_part1-container', AUTH.getSession().username);
+      }));
     });
-    FORUM.render('mid_exam_part1');
-});
-</script>
+  </script>
 </body>
 </html>

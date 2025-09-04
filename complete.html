@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Course Complete</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Course Complete</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="complete">
+  <div class="topbar"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar"></aside>
 
-<main>
-<h1>Congratulations!</h1>
-<p>You have successfully completed the course.</p>
+    <main class="content">
+      <div class="card">
+        <h1>Congratulations — Course Complete</h1>
+        <p class="lead">You finished the course. Download your certificate below.</p>
 
-<section id="certificate-section">
-    <button id="generate-certificate">Download Certificate</button>
-</section>
+        <div class="progress-row" style="margin-top:8px">
+          <div class="linear progress-line-wrapper"><div class="progress-fill"></div></div>
+          <div class="circular circular-progress"><svg width="92" height="92" viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"></circle><circle class="progress" cx="50" cy="50" r="42"></circle></svg><div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div></div>
+          <div class="stepped-progress" style="flex:0 0 240px"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);"><div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div></div>
+        </div>
 
-</main>
+        <hr style="opacity:.06;margin:12px 0">
 
-<script src="js/auth.js"></script>
-<script src="js/progress.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome('complete');
+        <section id="certificate-section">
+          <button id="generate-certificate" class="btn">Download Certificate (PDF)</button>
+        </section>
+      </div>
+    </main>
+  </div>
 
-    document.getElementById('generate-certificate').addEventListener('click', () => {
+  <script src="js/auth.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = 'index.html';
+      AUTH.renderChrome('complete');
+
+      document.getElementById('generate-certificate').addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(24);
-        doc.text("Certificate of Completion", 20, 40);
-        const userName = localStorage.getItem('SESSION_USER') || 'Student';
-        doc.setFontSize(16);
-        doc.text(`This certificate is awarded to ${userName}`, 20, 60);
+        const sess = AUTH.getSession();
+        const name = sess?.name || sess?.username || 'Student';
         const score = localStorage.getItem('GLOBAL_SCORE') || 'N/A';
-        doc.text(`Final Score: ${score}%`, 20, 80);
-        doc.save('Certificate.pdf');
+        doc.setFontSize(22);
+        doc.text('Certificate of Completion', 20, 30);
+        doc.setFontSize(14);
+        doc.text(`Awarded to: ${name}`, 20, 50);
+        doc.text(`Final score: ${score}%`, 20, 65);
+        doc.save(`Certificate_${name.replace(/\s+/g,'_')}.pdf`);
+      });
     });
-});
-</script>
+  </script>
 </body>
 </html>

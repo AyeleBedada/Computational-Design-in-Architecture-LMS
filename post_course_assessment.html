@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post Course Assessment</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Post Course Assessment</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="post_course_assessment">
+  <div class="topbar"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar"></aside>
 
-<main>
-<h1>Post Course Assessment</h1>
-<p>Please complete the assessment to help us improve the course.</p>
+    <main class="content">
+      <div class="card">
+        <h1>Post Course Assessment</h1>
+        <p class="lead">Please complete the feedback form to help us improve the course.</p>
 
-<section id="assessment-link">
-    <a href="https://forms.gle/your-google-form-link" target="_blank">
-        Click here to complete the assessment
-    </a>
-</section>
+        <div class="progress-row" style="margin-top:8px">
+          <div class="linear progress-line-wrapper"><div class="progress-fill"></div></div>
+          <div class="circular circular-progress"><svg width="92" height="92" viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"></circle><circle class="progress" cx="50" cy="50" r="42"></circle></svg><div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div></div>
+          <div class="stepped-progress" style="flex:0 0 240px"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);"><div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div></div>
+        </div>
 
-</main>
+        <hr style="opacity:.06;margin:12px 0">
 
-<script src="js/auth.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome('post_course_assessment');
-});
-</script>
+        <section id="assessment-link">
+          <a href="https://forms.gle/your-google-form-link" target="_blank" class="btn">Open Assessment Form</a>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = 'index.html';
+      AUTH.renderChrome('post_course_assessment');
+    });
+  </script>
 </body>
 </html>

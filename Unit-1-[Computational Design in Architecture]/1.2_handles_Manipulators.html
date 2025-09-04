@@ -1,54 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.2 Handles & Manipulators</title>
-<link rel="stylesheet" href="../css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>1.2 — Handles & Manipulators</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="1.2">
+  <div class="topbar" role="banner"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar" role="navigation"></aside>
 
-<main>
-    <h1>Designing/Modeling with Handles and Manipulators</h1>
-    <p>Lesson plan and learning objectives.</p>
+    <main class="content" role="main">
+      <div class="card">
+        <h1>Designing with Handles & Manipulators</h1>
+        <p class="lead">Techniques for interactive modeling and direct manipulation.</p>
 
-    <section id="forum-section">
-        <h2>Forum</h2>
-        <div id="1.2-forum-messages"></div>
-        <textarea id="1.2-forum-input" placeholder="Write your post here..."></textarea>
-        <button id="1.2-forum-post">Post</button>
-    </section>
-
-    <section id="quiz-section">
-        <h2>Quiz</h2>
-        <div class="quiz-container" id="1.2-container"></div>
-        <button class="submitAttempt">Submit Quiz</button>
-        <div class="quiz-feedback">
-            <span class="attemptBadge"></span>
-            <span class="quizScore"></span>
-            <span class="globalScore"></span>
+        <!-- Progress widgets -->
+        <div class="progress-row" style="margin-top:8px">
+          <div class="linear progress-line-wrapper"><div class="progress-fill"></div></div>
+          <div class="circular circular-progress" aria-hidden="false">
+            <svg width="92" height="92" viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="42" stroke-width="10"></circle>
+              <circle class="progress" cx="50" cy="50" r="42" stroke-width="10"></circle>
+            </svg><div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div>
+          </div>
+          <div class="stepped-progress" style="flex:0 0 240px"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);"><div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div></div>
         </div>
-    </section>
-</main>
 
-<script src="../js/auth.js"></script>
-<script src="../js/forum.js"></script>
-<script src="../js/quiz.js"></script>
-<script src="../js/1.2_handles_Manipulators.js"></script>
-<script src="../js/progress.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome('1.2');
-    Quiz.initQuizPage(document.getElementById('1.2-container'), 'quiz1.2');
-    document.getElementById('1.2-forum-post').addEventListener('click', () => {
-        const text = document.getElementById('1.2-forum-input').value;
-        FORUM.post('1.2', text);
+        <hr style="opacity:.06;margin:12px 0">
+
+        <section id="forum-section">
+          <h3>Forum</h3>
+          <div id="1.2-forum-messages" class="messages"></div>
+          <textarea id="1.2-forum-input" placeholder="Discuss modeling tips..." style="width:100%;min-height:100px;margin-top:8px"></textarea>
+          <div style="margin-top:8px"><button id="1.2-forum-post" class="btn">Post</button></div>
+        </section>
+
+        <section id="quiz-section" style="margin-top:12px">
+          <h3>Quiz — Handles & Manipulators (14 questions · 14%)</h3>
+          <div id="1.2-container" class="quiz-container"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+            <button class="submitAttempt btn">Submit Attempt</button>
+            <div style="margin-left:auto"><strong>Attempts:</strong> <span class="attemptBadge">0/3</span></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/forum.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/1.2_handles_Manipulators.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = '../index.html';
+      AUTH.renderChrome('1.2');
+
+      Quiz.initQuizPage(document.getElementById('1.2-container'), 'quiz1_2');
+
+      document.getElementById('1.2-forum-post').addEventListener('click', () => {
+        const t = document.getElementById('1.2-forum-input').value;
+        FORUM.post('1.2', t);
         document.getElementById('1.2-forum-input').value = '';
+      });
+
+      document.querySelectorAll('.submitAttempt').forEach(b => b.addEventListener('click', () => {
+        Quiz.submit('quiz1_2', '1.2-container', AUTH.getSession().username);
+      }));
     });
-    FORUM.render('1.2');
-});
-</script>
+  </script>
 </body>
 </html>

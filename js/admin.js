@@ -1,13 +1,14 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const session = AUTH.getSession();
     if(!session || session.role !== 'admin') return alert('Access denied: Admin only.');
 
     const reportsEl = document.getElementById('adminReports');
     const csvExportBtn = document.getElementById('exportCSV');
+    const txtExportBtn = document.getElementById('exportTXT');
     const quizToggleEls = document.querySelectorAll('.quiz-toggle');
+    const chartCanvas = document.getElementById('adminChart');
 
-    function renderReports(){
+    function renderReports() {
         const reports = AUTH.getReports();
         if(!reportsEl) return;
         reportsEl.innerHTML = reports.length ? reports.map(rep =>
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`).join('') : '<div>No reports yet</div>';
     }
 
-    function exportCSV(){
+    function exportCSV() {
         const reports = AUTH.getReports();
         const csvRows = ['Email,Quiz,Attempt,Score,Best,Timestamp'];
         reports.forEach(r => {
@@ -31,10 +32,56 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(url);
     }
 
-    csvExportBtn?.addEventListener('click', exportCSV);
-    renderReports();
+    function exportTXT() {
+        const reports = AUTH.getReports();
+        const txtRows = reports.map(r => `${r.email} | ${r.quizId} | Attempt ${r.attempt} | Score ${r.score} | Best ${r.best} | ${new Date(r.ts).toLocaleString()}`);
+        const blob = new Blob([txtRows.join('\n')], {type:'text/plain'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'lms_reports.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
 
-    // Quiz availability toggles
+    function renderChart() {
+        if(!chartCanvas) return;
+        const reports = AUTH.getReports();
+        const quizMap = {};
+
+        reports.forEach(r => {
+            if(!quizMap[r.quizId]) quizMap[r.quizId] = [];
+            quizMap[r.quizId].push(r.score);
+        });
+
+        const labels = Object.keys(quizMap);
+        const avgScores = labels.map(q => {
+            const scores = quizMap[q];
+            return Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+        });
+
+        new Chart(chartCanvas, {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Average Score (%)',
+                    data: avgScores,
+                    backgroundColor: '#2ea15a'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero:true, max:100 } }
+            }
+        });
+    }
+
+    csvExportBtn?.addEventListener('click', exportCSV);
+    txtExportBtn?.addEventListener('click', exportTXT);
+    renderReports();
+    renderChart();
+
     quizToggleEls.forEach(el => {
         const quizId = el.dataset.quiz;
         const open = AUTH.getQuizOpen();
@@ -45,38 +92,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-
-const Admin = {
-    renderDashboard: () => {
-        const container = document.getElementById('admin-dashboard');
-        if (!container) return;
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        container.innerHTML = users.map(u => {
-            const score = localStorage.getItem(`score_${u.username}`) || 0;
-            return `<tr>
-                <td>${u.username}</td>
-                <td>${u.email}</td>
-                <td>${u.role}</td>
-                <td>${score}</td>
-            </tr>`;
-        }).join('');
-    },
-    exportCSV: () => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        let csv = 'Username,Email,Role,Score\n';
-        users.forEach(u => {
-            const score = localStorage.getItem(`score_${u.username}`) || 0;
-            csv += `${u.username},${u.email},${u.role},${score}\n`;
-        });
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'users_report.csv';
-        link.click();
-    },
-    toggleQuiz: (quizKey, active) => {
-        localStorage.setItem(`quiz_active_${quizKey}`, active ? '1' : '0');
-        alert(`Quiz ${quizKey} is now ${active ? 'active' : 'inactive'}`);
-    }
-};

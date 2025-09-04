@@ -1,61 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.1.1 Introduction to Computational Design</title>
-<link rel="stylesheet" href="../../../css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>1.1.1 — Introduction to Computational Design</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="1.1.1">
+  <div class="topbar" role="banner"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar" role="navigation"></aside>
 
-<main>
-    <h1>Introduction to Computational Design</h1>
-    <p>Lesson plan, learning objectives, and general introduction to computational design.</p>
+    <main class="content" role="main">
+      <div class="card">
+        <h1>Introduction to Computational Design</h1>
+        <p class="lead">Learning objectives, tools, and workflow overview.</p>
 
-    <section id="lesson-content">
-        <p>Computational design integrates digital tools into the architectural design process.</p>
-    </section>
+        <!-- Progress widgets -->
+        <div class="progress-row" style="margin-top:8px">
+          <div class="linear progress-line-wrapper" role="progressbar"><div class="progress-fill"></div></div>
 
-    <section id="forum-section">
-        <h2>Forum</h2>
-        <div id="1.1.1-forum-messages"></div>
-        <textarea id="1.1.1-forum-input" placeholder="Write your post here..."></textarea>
-        <button id="1.1.1-forum-post">Post</button>
-    </section>
+          <div class="circular circular-progress" aria-hidden="false">
+            <svg width="92" height="92" viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="42" stroke-width="10"></circle>
+              <circle class="progress" cx="50" cy="50" r="42" stroke-width="10"></circle>
+            </svg>
+            <div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div>
+          </div>
 
-    <section id="quiz-section">
-        <h2>Quiz</h2>
+          <div class="stepped-progress" style="flex:0 0 240px">
+            <div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div>
+          </div>
 
-        <div class="quiz-container" id="1.1.1-container"></div>
-        <button class="submitAttempt">Submit Quiz</button>
-        <div class="quiz-feedback">
-            <span class="attemptBadge"></span>
-            <span class="quizScore"></span>
-            <span class="globalScore"></span>
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);">
+            <div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div>
+          </div>
         </div>
-    </section>
-</main>
 
-<script src="../../../js/auth.js"></script>
-<script src="../../../js/forum.js"></script>
-<script src="../../../js/quiz.js"></script>
-<script src="../../../js/1.1.1_introduction_Computational_Design.js"></script>
-<script src="../../../js/progress.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome('1.1.1');
-    Quiz.initQuizPage(document.getElementById('1.1.1-container'), 'quiz1_1_1');
-    document.getElementById('1.1.1-forum-post').addEventListener('click', () => {
-        const text = document.getElementById('1.1.1-forum-input').value;
-        FORUM.post('1.1.1', text);
+        <hr style="opacity:.06;margin:12px 0">
+
+        <section id="lesson-content">
+          <p>Computational design integrates parametric tools and algorithmic thinking into architectural design.</p>
+        </section>
+
+        <section id="forum-section" style="margin-top:12px">
+          <h3>Forum</h3>
+          <div id="1.1.1-forum-messages" class="messages"></div>
+          <textarea id="1.1.1-forum-input" placeholder="Share questions or resources..." style="width:100%;min-height:100px;margin-top:8px"></textarea>
+          <div style="margin-top:8px"><button id="1.1.1-forum-post" class="btn">Post</button></div>
+        </section>
+
+        <section id="quiz-section" style="margin-top:12px">
+          <h3>Quiz — Introduction (14 questions · 14%)</h3>
+          <div id="1.1.1-container" class="quiz-container"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+            <button class="submitAttempt btn">Submit Attempt</button>
+            <div style="margin-left:auto"><strong>Attempts:</strong> <span class="attemptBadge">0/3</span></div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:12px">
+            <div><strong>Live potential:</strong> <span class="livePotential">0%</span></div>
+            <div style="margin-left:12px"><strong>Quiz score:</strong> <span class="quizScore">0%</span></div>
+            <div style="margin-left:auto"><strong>Overall:</strong> <span class="globalScore">0%</span></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../../js/auth.js"></script>
+  <script src="../../../js/progress.js"></script>
+  <script src="../../../js/forum.js"></script>
+  <script src="../../../js/quiz.js"></script>
+  <script src="../../../js/1.1.1_introduction_Computational_Design.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = '../../../index.html';
+      AUTH.renderChrome('1.1.1');
+
+      Quiz.initQuizPage(document.getElementById('1.1.1-container'), 'quiz1_1_1');
+
+      document.getElementById('1.1.1-forum-post').addEventListener('click', () => {
+        const t = document.getElementById('1.1.1-forum-input').value;
+        FORUM.post('1.1.1', t);
         document.getElementById('1.1.1-forum-input').value = '';
+      });
+
+      // submit attempt
+      document.querySelectorAll('.submitAttempt').forEach(b => b.addEventListener('click', () => {
+        Quiz.submit('quiz1_1_1', '1.1.1-container', AUTH.getSession().username);
+      }));
     });
-    FORUM.render('1.1.1');
-});
-</script>
-
-
+  </script>
 </body>
 </html>

@@ -30,7 +30,7 @@ const Quiz = {
         quizData.forEach((q, i) => {
             const selected = container.querySelector(`input[name=q${i}]:checked`);
             const optionEls = container.querySelectorAll(`input[name=q${i}]`);
-            
+
             optionEls.forEach(opt => {
                 const parent = opt.closest('.option');
                 parent.classList.remove('correct', 'incorrect');
@@ -52,6 +52,16 @@ const Quiz = {
         if (score > prevBest) localStorage.setItem(bestScoreKey, score);
 
         alert(`You scored ${score}/${quizData.length}. Attempt #${attempts}. Best: ${Math.max(score, prevBest)}`);
+
+        // Save global report
+        AUTH.saveReport({
+            email: username,
+            quizId: quizKey,
+            attempt: attempts,
+            score,
+            best: Math.max(score, prevBest),
+            ts: Date.now()
+        });
 
         // Update progress bars
         UIProgress.updateAllProgress(score, quizData.length);

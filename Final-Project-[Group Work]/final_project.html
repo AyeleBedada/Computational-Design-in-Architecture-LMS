@@ -1,47 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Final Project</title>
-<link rel="stylesheet" href="../css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Final Project — Group Work</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="final_project">
+  <div class="topbar"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar"></aside>
 
-<main>
-<h1>Final Project</h1>
-<p>Group project instructions and submission forum.</p>
+    <main class="content">
+      <div class="card">
+        <h1>Final Project</h1>
+        <p class="lead">Group brief, deliverables and submission instructions.</p>
 
-<section id="forum-section">
-    <h2>Forum</h2>
-    <div id="final_project-forum-messages"></div>
-    <textarea id="final_project-forum-input" placeholder="Write your post here..."></textarea>
-    <button id="final_project-forum-post">Post</button>
-</section>
+        <div class="progress-row" style="margin-top:8px">
+          <div class="linear progress-line-wrapper"><div class="progress-fill"></div></div>
+          <div class="circular circular-progress"><svg width="92" height="92" viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"></circle><circle class="progress" cx="50" cy="50" r="42"></circle></svg><div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div></div>
+          <div class="stepped-progress" style="flex:0 0 240px"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);"><div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div></div>
+        </div>
 
-<section id="project-upload-section">
-    <h2>Upload Project</h2>
-    <input type="file" id="project-upload">
-    <button id="submit-project">Submit Project</button>
-</section>
+        <hr style="opacity:.06;margin:12px 0">
 
-</main>
+        <section id="forum-section">
+          <h3>Project Forum</h3>
+          <div id="final_project-forum-messages" class="messages"></div>
+          <textarea id="final_project-forum-input" placeholder="Discuss project tasks..." style="width:100%;min-height:100px;margin-top:8px"></textarea>
+          <div style="margin-top:8px"><button id="final_project-forum-post" class="btn">Post</button></div>
+        </section>
 
-<script src="../js/auth.js"></script>
-<script src="../js/forum.js"></script>
-<script src="../js/progress.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    AUTH.renderChrome('final_project');
-    document.getElementById('final_project-forum-post').addEventListener('click', () => {
-        const text = document.getElementById('final_project-forum-input').value;
-        FORUM.post('final_project', text);
+        <section id="project-upload-section" style="margin-top:12px">
+          <h3>Upload Project</h3>
+          <input id="project-upload" type="file" />
+          <div style="margin-top:8px"><button id="submit-project" class="btn">Submit Project</button></div>
+          <div id="project-upload-status" style="margin-top:8px;color:var(--muted)"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/forum.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = '../index.html';
+      AUTH.renderChrome('final_project');
+
+      document.getElementById('final_project-forum-post').addEventListener('click', () => {
+        const t = document.getElementById('final_project-forum-input').value;
+        FORUM.post('final_project', t);
         document.getElementById('final_project-forum-input').value = '';
+      });
+
+      // file submission (demo only)
+      document.getElementById('submit-project').addEventListener('click', () => {
+        const f = document.getElementById('project-upload').files[0];
+        const s = document.getElementById('project-upload-status');
+        if (!f) { s.textContent = 'Choose a file first.'; return; }
+        s.textContent = `Received "${f.name}" — (demo) saved to client only.`;
+      });
     });
-    FORUM.render('final_project');
-});
-</script>
+  </script>
 </body>
 </html>

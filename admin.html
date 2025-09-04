@@ -1,62 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - LMS</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Dashboard — LMS</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <!-- Top navigation bar -->
-    <header class="top-nav">
-        <div class="logo">LMS Admin</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="admin.html" class="active">Dashboard</a></li>
-                <li><a href="#" id="logoutBtn">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+<body data-page="admin">
+  <div class="topbar" role="banner"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar" role="navigation"></aside>
 
-    <!-- Side navigation -->
-    <aside class="side-nav">
-        <ul>
-            <li><strong>Quizzes</strong></li>
-            <li><label>0_quiz_0 <input type="checkbox" class="quiz-toggle" data-quiz="0_quiz_0"></label></li>
-            <li><label>1.1.1_intro <input type="checkbox" class="quiz-toggle" data-quiz="1.1.1_introduction_Computational_Design"></label></li>
-            <li><label>1.2_handles <input type="checkbox" class="quiz-toggle" data-quiz="1.2_handles_Manipulators"></label></li>
-            <li><label>2.1_contemp <input type="checkbox" class="quiz-toggle" data-quiz="2.1_contemporary_Geometries"></label></li>
-            <li><label>3.1_digital_fab <input type="checkbox" class="quiz-toggle" data-quiz="3.1_digital_fabrication"></label></li>
-            <li><label>4.1_BIM <input type="checkbox" class="quiz-toggle" data-quiz="4.1_introduction_BIM"></label></li>
-        </ul>
-    </aside>
-
-    <!-- Main content -->
-    <main class="main-content">
+    <main class="content" role="main">
+      <div class="card">
         <h1>Admin Dashboard</h1>
+        <p class="lead">Manage quiz availability, view reports and export CSVs.</p>
 
-        <!-- CSV Export -->
-        <div class="export-section">
-            <button id="exportCSV">Export Reports as CSV</button>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+          <button id="exportCSV" class="btn">Export Reports (CSV)</button>
+          <button id="refreshReports" class="btn btn-ghost">Refresh</button>
         </div>
 
-        <!-- User Reports -->
-        <section id="adminReports" class="reports-section">
-            <h2>User Reports</h2>
-            <div>Loading reports...</div>
+        <section id="adminControls" style="margin-top:12px">
+          <h3>Quiz Availability</h3>
+          <div id="adminQuizToggles"></div>
         </section>
-    </main>
 
-    <!-- Scripts -->
-    <script src="js/auth.js"></script>
-    <script src="js/admin.js"></script>
-    <script>
-        // Logout button
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            AUTH.logout();
-            window.location.href = 'index.html';
-        });
-    </script>
+        <section id="adminReports" style="margin-top:12px">
+          <h3>Recent Reports</h3>
+          <div id="adminReportsList" class="card"></div>
+        </section>
+
+        <section id="adminCharts" style="margin-top:12px">
+          <h3>Analytics</h3>
+          <div id="adminChartWrap" style="min-height:220px">(Charts will render here)</div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/forum.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    // admin wiring: ensure only admin can stay here
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!AUTH.getSession()) return location.href = 'index.html';
+      AUTH.renderChrome('admin'); // inject header + sidebar via auth
+      // admin.js will handle the rest (it expects admin session)
+    });
+  </script>
 </body>
 </html>

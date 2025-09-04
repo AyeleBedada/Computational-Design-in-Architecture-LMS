@@ -1,16 +1,11 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const quizId = '0_quiz_0';
     const container = document.getElementById('quiz-container');
 
     if(container){
-        // Load quiz data
-        const quizData = JSON.parse(localStorage.getItem(quizId)) || [];
-        QUIZ.initQuizPage(container, quizId);
-
-        // Initialize forum
+        Quiz.initQuizPage(container, quizId);
         FORUM.render(quizId);
+
         const forumInput = document.getElementById('forum-input');
         const forumSubmit = document.getElementById('forum-submit');
         if(forumSubmit && forumInput){
@@ -23,11 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const quiz0 = [
-    { question: "What is the main objective of Unit 0?", options: ["Objective 1", "Objective 2", "Objective 3", "Objective 4"], answer: 0, weight: 1 },
-    { question: "What is a forum used for?", options: ["Discussion", "Email", "Printing", "Homework"], answer: 0, weight: 1 },
-    { question: "Who is the instructor of this course?", options: ["Ayele", "Admin", "Guest", "Professor X"], answer: 0, weight: 1 },
-    { question: "How many hours are allocated for lectures?", options: ["2", "3", "4", "5"], answer: 2, weight: 1 },
-    { question: "Which section covers course introduction?", options: ["Unit 0", "Unit 1", "Unit 2", "Unit 3"], answer: 0, weight: 1 },
+    { question: "What is the main objective of Unit 0?", options: ["Course overview", "Advanced modeling", "Data analysis", "Project submission"], answer: 0, weight: 1 },
+    { question: "Where can students post questions?", options: ["Forum", "Email", "Printing", "Assignments"], answer: 0, weight: 1 },
+    { question: "Who is the instructor for this course?", options: ["Ayele", "Admin", "Guest", "Professor X"], answer: 0, weight: 1 },
+    { question: "How many lecture hours are allocated?", options: ["2", "3", "4", "5"], answer: 2, weight: 1 },
+    { question: "Which unit covers course introduction?", options: ["Unit 0", "Unit 1", "Unit 2", "Unit 3"], answer: 0, weight: 1 },
     { question: "Forum posts are saved in?", options: ["localStorage", "server", "cookies", "session"], answer: 0, weight: 1 },
     { question: "How many attempts per quiz are allowed?", options: ["1", "2", "3", "Unlimited"], answer: 2, weight: 1 },
     { question: "Quizzes are controlled by?", options: ["Student", "Admin", "Teacher Assistant", "System"], answer: 1, weight: 1 },
@@ -39,4 +34,4 @@ const quiz0 = [
     { question: "Which file updates progress bar?", options: ["progress.js", "auth.js", "quiz.js", "forum.js"], answer: 0, weight: 1 }
 ];
 
-localStorage.setItem('quiz0', JSON.stringify(quiz0));
+localStorage.setItem('0_quiz_0', JSON.stringify(quiz0));

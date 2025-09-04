@@ -1,58 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit 0 - Course Introduction</title>
-<link rel="stylesheet" href="../css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Unit 0 — Course Introduction</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-<div class="topbar"></div>
-<div class="sidebar"></div>
+<body data-page="unit0">
+  <div class="topbar" role="banner"></div>
+  <div class="container main-wrapper" style="gap:18px">
+    <aside class="sidebar" role="navigation"></aside>
 
-<main>
-    <h1>Course Introduction</h1>
-    <p>This unit summarizes the course objectives, learning outcomes, and discussion points.</p>
+    <main class="content" role="main">
+      <div class="card">
+        <h1>Unit 0 — Course Introduction</h1>
+        <p class="lead">Course overview, learning outcomes and unit objectives.</p>
 
-    <section id="unit-summary">
-        <p>Welcome to the course! Here you will learn the basics of computational design in architecture.</p>
-    </section>
+        <!-- Progress widgets -->
+        <div class="progress-row" aria-hidden="false">
+          <div class="linear progress-line-wrapper" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill"></div>
+          </div>
 
-    <section id="forum-section">
-        <h2>Forum</h2>
-        <div id="0_quiz_0-forum-messages"></div>
-        <textarea id="0_quiz_0-forum-input" placeholder="Write your post here..."></textarea>
-        <button id="0_quiz_0-forum-post">Post</button>
-    </section>
+          <div class="circular circular-progress" aria-hidden="false" title="Overall progress">
+            <svg width="92" height="92" viewBox="0 0 100 100">
+              <circle class="bg" cx="50" cy="50" r="42" stroke-width="10"></circle>
+              <circle class="progress" cx="50" cy="50" r="42" stroke-width="10" stroke-linecap="round"></circle>
+            </svg>
+            <div class="value" style="position:absolute;margin-left:28px;margin-top:18px;font-weight:800">0%</div>
+          </div>
 
-    <section id="quiz-section">
-        <h2>Quiz 0</h2>
-        <div class="quiz-container" id="0_quiz_0-container"></div>
-        <button class="submitAttempt">Submit Quiz</button>
-        <div class="quiz-feedback">
-            <span class="attemptBadge"></span>
-            <span class="quizScore"></span>
-            <span class="globalScore"></span>
+          <div class="stepped-progress" aria-hidden="false" style="flex:0 0 240px">
+            <div class="step"></div>
+            <div class="step"></div>
+            <div class="step"></div>
+            <div class="step"></div>
+          </div>
+
+          <div class="animated" style="width:120px;height:14px;border-radius:999px;overflow:hidden;background:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 10px, rgba(0,0,0,0.01) 10px 20px);">
+            <div class="runner" style="height:100%;width:0%;transition:width .4s ease"></div>
+          </div>
         </div>
-    </section>
-</main>
 
-<script src="../js/auth.js"></script>
-<script src="../js/forum.js"></script>
-<script src="../js/quiz.js"></script>
-<script src="../js/0_quiz_0.js"></script>
-<script src="../js/progress.js"></script>
-<script>
+        <hr style="opacity:.06;margin:12px 0">
+
+        <section id="unit-summary">
+          <h2>About this unit</h2>
+          <p>This unit introduces the course structure, assessment breakdown and expectations.</p>
+        </section>
+
+        <section id="forum-section" style="margin-top:12px">
+          <h3>Discussion Forum</h3>
+          <div id="0_quiz_0-forum-messages" class="messages"></div>
+          <textarea id="0_quiz_0-forum-input" placeholder="Write your message..." style="width:100%;min-height:80px;margin-top:8px"></textarea>
+          <div style="margin-top:8px"><button id="0_quiz_0-forum-post" class="btn">Post</button></div>
+        </section>
+
+        <section id="quiz-section" style="margin-top:12px">
+          <h3>Quiz — Unit 0 (14 questions · 14%)</h3>
+          <div id="0_quiz_0-container" class="quiz-container"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+            <button class="submitAttempt btn">Submit Attempt</button>
+            <div style="margin-left:auto"><strong>Attempts:</strong> <span class="attemptBadge">0/3</span></div>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:12px">
+            <div><strong>Live potential:</strong> <span class="livePotential">0%</span></div>
+            <div style="margin-left:12px"><strong>Quiz score:</strong> <span class="quizScore">0%</span></div>
+            <div style="margin-left:auto"><strong>Overall:</strong> <span class="globalScore">0%</span></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- scripts (auth first) -->
+  <script src="../js/auth.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/forum.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/0_quiz_0.js"></script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
-        AUTH.renderChrome('0_quiz_0');
-        Quiz.initQuizPage(document.getElementById('0_quiz_0-container'), 'quiz0');
-        document.getElementById('0_quiz_0-forum-post').addEventListener('click', () => {
-            const text = document.getElementById('0_quiz_0-forum-input').value;
-            FORUM.post('0_quiz_0', text);
-            document.getElementById('0_quiz_0-forum-input').value = '';
+      // protect + render chrome
+      const s = AUTH.getSession();
+      if (!s) return location.href = '../index.html';
+      AUTH.renderChrome('unit0');
+
+      // init quiz engine
+      const container = document.getElementById('0_quiz_0-container');
+      Quiz.initQuizPage(container, 'quiz0'); // loads questions from js file stored in localStorage by 0_quiz_0.js
+
+      // wire forum
+      document.getElementById('0_quiz_0-forum-post').addEventListener('click', () => {
+        const txt = document.getElementById('0_quiz_0-forum-input').value;
+        FORUM.post('0_quiz_0', txt);
+        document.getElementById('0_quiz_0-forum-input').value = '';
+      });
+      FORUM.render('0_quiz_0');
+
+      // wire submit attempt button from quiz.js (we use .submitAttempt class for consistency)
+      document.querySelectorAll('.submitAttempt').forEach(b => {
+        b.addEventListener('click', () => {
+          Quiz.submit('quiz0', '0_quiz_0-container', AUTH.getSession().username);
         });
-        FORUM.render('0_quiz_0');
+      });
     });
-</script>
+  </script>
 </body>
 </html>

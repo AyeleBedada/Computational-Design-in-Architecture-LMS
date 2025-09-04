@@ -1,52 +1,66 @@
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computational Design in Architecture</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Computational Design in Architecture — Login</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <div class="login-container">
-        <h1>Welcome to Computational Design in Architecture LMS</h1>
-        <p>Our learning platform offers a collaborative and interactive environment for students and staff alike.</p>
+  <main class="login-container" aria-labelledby="loginTitle">
+    <h1 id="loginTitle">Computational Design in Architecture — LMS</h1>
+    <p>Welcome — sign in with your issued email and password to access course materials.</p>
 
-        <form id="loginForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" required placeholder="Enter your email">
+    <form id="loginForm" aria-describedby="loginHelp">
+      <label for="email">Email</label>
+      <input id="email" type="email" required placeholder="you@example.edu" />
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" required placeholder="Enter your password">
+      <label for="password">Password</label>
+      <input id="password" type="password" required placeholder="Password" />
 
-            <button type="submit">Login</button>
-        </form>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+        <button type="submit" class="btn">Login</button>
+        <button id="demoCreds" type="button" class="btn btn-ghost">Show demo creds</button>
+      </div>
+      <div id="loginError" class="error-message" role="alert" aria-live="polite"></div>
+      <div id="loginHelp" class="muted" style="margin-top:8px;font-size:13px">Demo users are defined in <code>data/users.json</code></div>
+    </form>
+  </main>
 
-        <div id="loginError" class="error-message"></div>
-    </div>
+  <!-- auth must load before we call it -->
+  <script src="js/auth.js"></script>
+  <script>
+    // wire login safely (auth.js exposes AUTH.login)
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('loginForm');
+      const err = document.getElementById('loginError');
+      const demoBtn = document.getElementById('demoCreds');
 
-    <script src="js/auth.js"></script>
-    <script>
-        // Handle login form submission
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
+      demoBtn.addEventListener('click', () => {
+        // example demo creds — user can change per your users.json
+        document.getElementById('email').value = 'ayele.bedada@eiabc.edu.et';
+        document.getElementById('password').value = 'thesecond123';
+      });
 
-            try {
-                const success = await AUTH.login(email, password);
-                if(success) {
-                    window.location.href = "Unit-0-[Course Introduction]/0_quiz_0.html";
-                } else {
-                    document.getElementById('loginError').innerText = "Invalid email or password.";
-                }
-            } catch (err) {
-                console.error(err);
-                document.getElementById('loginError').innerText = "An error occurred during login. Please try again.";
-            }
-        });
-    </script>
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        err.textContent = '';
+        const email = (document.getElementById('email').value || '').trim().toLowerCase();
+        const pwd = (document.getElementById('password').value || '').trim();
+        try {
+          const ok = await AUTH.login(email, pwd);
+          if (ok) {
+            // redirect to course intro (Unit 0)
+            location.href = 'Unit-0-[Course Introduction]/0_quiz_0.html';
+          } else {
+            err.textContent = 'Invalid email or password (demo).';
+          }
+        } catch (e) {
+          console.error('Login error', e);
+          err.textContent = 'An error occurred during login. Check console for details.';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
