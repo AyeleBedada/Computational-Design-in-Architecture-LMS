@@ -177,25 +177,10 @@
     <a href="../post_course_assessment.html">Post Course Assessment</a>
     <a href="../complete.html">Course Completion</a>
     <a href="../admin.html" id="admin-top-link">Admin</a>
-    <a href="#" id="change-pass-btn">Change Password</a>
+    <a href="#" id="change-pass-btn">Change Password</a>  
+
     <a href="../index.html" id="logout-btn">Logout</a>
 </nav>
-
-
-<div id="change-pass-modal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span id="close-pass-modal" class="close">&times;</span>
-        <h3>Change Password</h3>
-        <label for="username-pass">Username:</label>
-        <input type="text" id="username-pass" placeholder="Enter your username">
-        <label for="new-pass">New Password:</label>
-        <input type="password" id="new-pass" placeholder="Enter new password">
-        <button id="submit-pass-change">Update Password</button>
-        <p id="pass-msg" style="color:red;"></p>
-    </div>
-</div>
-
-
 
 
 <h1>Unit 0 - Course Introduction</h1>
@@ -287,6 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submit-pass-change');
     const msg = document.getElementById('pass-msg');
 
+    if (!changeBtn || !modal) return;
+
     changeBtn.addEventListener('click', () => modal.style.display = 'block');
     closeBtn.addEventListener('click', () => modal.style.display = 'none');
     window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
@@ -312,7 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Save new password in localStorage
             localStorage.setItem(`pw_${user.email}`, newPass);
             msg.style.color = 'green';
             msg.textContent = "Password successfully updated!";
@@ -328,6 +314,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+<div id="change-pass-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span id="close-pass-modal" class="close">&times;</span>
+        <h3>Change Password</h3>
+        <label for="username-pass">Username:</label>
+        <input type="text" id="username-pass" placeholder="Enter your username">
+        <label for="new-pass">New Password:</label>
+        <input type="password" id="new-pass" placeholder="Enter new password">
+        <button id="submit-pass-change">Update Password</button>
+        <p id="pass-msg" style="color:red;"></p>
+    </div>
+</div>
 
+
+<script src="js/change_password.js"></script>
 </body>
 </html>
