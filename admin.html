@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Top navigation bar -->
+    <header class="top-nav">
+        <div class="logo">LMS Admin</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="admin.html" class="active">Dashboard</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Side navigation -->
+    <aside class="side-nav">
+        <ul>
+            <li><strong>Quizzes</strong></li>
+            <li><label>0_quiz_0 <input type="checkbox" class="quiz-toggle" data-quiz="0_quiz_0"></label></li>
+            <li><label>1.1.1_intro <input type="checkbox" class="quiz-toggle" data-quiz="1.1.1_introduction_Computational_Design"></label></li>
+            <li><label>1.2_handles <input type="checkbox" class="quiz-toggle" data-quiz="1.2_handles_Manipulators"></label></li>
+            <li><label>2.1_contemp <input type="checkbox" class="quiz-toggle" data-quiz="2.1_contemporary_Geometries"></label></li>
+            <li><label>3.1_digital_fab <input type="checkbox" class="quiz-toggle" data-quiz="3.1_digital_fabrication"></label></li>
+            <li><label>4.1_BIM <input type="checkbox" class="quiz-toggle" data-quiz="4.1_introduction_BIM"></label></li>
+        </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <h1>Admin Dashboard</h1>
+
+        <!-- CSV Export -->
+        <div class="export-section">
+            <button id="exportCSV">Export Reports as CSV</button>
+        </div>
+
+        <!-- User Reports -->
+        <section id="adminReports" class="reports-section">
+            <h2>User Reports</h2>
+            <div>Loading reports...</div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Logout button
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            AUTH.logout();
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
