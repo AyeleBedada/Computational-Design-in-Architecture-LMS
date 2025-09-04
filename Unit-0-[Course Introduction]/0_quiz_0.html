@@ -11,7 +11,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <h2>Course Units</h2>
-        <ul>
+        <ul id="sidebar-menu">
             <li>Unit 0
                 <ul>
                     <li><a href="0_quiz_0.html">Course Introduction Quiz</a></li>
@@ -38,6 +38,15 @@
                     <li><a href="../Unit-4.1_introduction_BIM/4.1_introduction_BIM.html">Introduction to BIM</a></li>
                 </ul>
             </li>
+            <li>Final Assessments
+                <ul>
+                    <li><a href="../post_course_assessment.html">Post Course Assessment</a></li>
+                    <li><a href="../complete.html">Course Completion</a></li>
+                </ul>
+            </li>
+            <li id="admin-link" style="display:none;">
+                <a href="../admin.html">Admin Dashboard</a>
+            </li>
         </ul>
     </aside>
 
@@ -49,6 +58,9 @@
             <div>
                 <a href="../index.html">Home</a>
                 <a href="../profile.html">Profile</a>
+                <a href="../post_course_assessment.html">Post Course Assessment</a>
+                <a href="../complete.html">Course Completion</a>
+                <a href="../admin.html" id="admin-top-link" style="display:none;">Admin</a>
                 <a href="../logout.html" id="logout-btn">Logout</a>
             </div>
         </nav>
@@ -95,6 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!session) {
         window.location.href = "../index.html";
         return;
+    }
+
+    // Show admin links if user is admin
+    if (session.role === 'admin') {
+        document.getElementById('admin-link').style.display = 'block';
+        document.getElementById('admin-top-link').style.display = 'inline-block';
     }
 
     const quizId = '0_quiz_0';
